@@ -7,6 +7,7 @@ import SavedMovies from "../SavedMovies";
 import Profile from "../Profile";
 import Register from "../Register";
 import Login from "../Login";
+import PageNotFound from "../PageNotFound";
 import "./App.css";
 
 export default function App() {
@@ -38,6 +39,10 @@ export default function App() {
 
         <Route path="/signup">
           <Register />
+        </Route>
+
+        <Route path="*">
+          <PageNotFound />
         </Route>
       </Switch>
     </div>
