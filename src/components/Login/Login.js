@@ -24,6 +24,7 @@ export default function Login() {
             id="email"
             name="email"
             type="email"
+            placeholder="pochta@yandex.ru"
             autoComplete="email"
             value={email}
             onChange={handleEmailChange}
@@ -37,6 +38,7 @@ export default function Login() {
             id="password"
             name="password"
             type="password"
+            placeholder="Пароль"
             autoComplete="password"
             value={password}
             onChange={handlePasswordChange}

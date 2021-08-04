@@ -41,6 +41,7 @@ export default function Profile() {
             id="name-input"
             name="name"
             type="text"
+            placeholder="Виталий"
             minLength="2"
             maxLength="30"
             value={name}

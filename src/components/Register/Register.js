@@ -29,6 +29,7 @@ export default function Register() {
             id="name"
             name="name"
             type="text"
+            placeholder="Виталий"
             autoComplete="name"
             minLength="2"
             maxLength="30"
@@ -44,6 +45,7 @@ export default function Register() {
             id="email"
             name="email"
             type="email"
+            placeholder="pochta@yandex.ru"
             autoComplete="email"
             value={email}
             onChange={handleEmailChange}
@@ -57,6 +59,7 @@ export default function Register() {
             id="password"
             name="password"
             type="password"
+            placeholder="Пароль"
             autoComplete="password"
             value={password}
             onChange={handlePasswordChange}
