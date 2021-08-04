@@ -5,7 +5,7 @@ export default function Portfolio() {
     <section className="portfolio">
       <h3 className="portfolio__heading">Портфолио</h3>
       <ul className="portfolio__list">
-        <li>
+        <li className="portfolio__item">
           <a
             className="portfolio__link"
             href="https://nklazuta.github.io/how-to-learn/"
@@ -16,7 +16,7 @@ export default function Portfolio() {
             <div className="portfolio__arrow" />
           </a>
         </li>
-        <li>
+        <li className="portfolio__item">
           <a
             className="portfolio__link"
             href="https://nklazuta.github.io/russian-travel/"
@@ -27,7 +27,7 @@ export default function Portfolio() {
             <div className="portfolio__arrow" />
           </a>
         </li>
-        <li>
+        <li className="portfolio__item">
           <a
             className="portfolio__link"
             href="https://nklazuta.github.io/mesto/"

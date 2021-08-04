@@ -20,7 +20,7 @@ export default function AboutMe() {
           я планирую найти постоянную работу в этой области.
         </p>
         <ul className="about-me__links">
-          <li>
+          <li className="about-me__item">
             <a
               className="about-me__link"
               href="https://www.facebook.com/nklazuta"
@@ -30,7 +30,7 @@ export default function AboutMe() {
               Facebook
             </a>
           </li>
-          <li>
+          <li className="about-me__item">
             <a
               className="about-me__link"
               href="https://github.com/nklazuta"

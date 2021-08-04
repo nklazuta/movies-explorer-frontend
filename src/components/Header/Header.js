@@ -16,7 +16,7 @@ export default function Header({ isLoggedIn }) {
 
   return (
     <header className="header">
-      <Link exact path="/" className="header__redirect-button">
+      <Link exact to="/" className="header__redirect-button">
         <img
           className={headerLogoClassName}
           src={logo}

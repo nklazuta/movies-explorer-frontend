@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navigation() {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -23,22 +23,22 @@ export default function Navigation() {
       <div className="navigation__wrapper">
         <ul className="navigation__list">
           <li>
-            <Link exact path="/" className="navigation__link">
+            <NavLink exact to="/" className="navigation__link">
               Главная
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link path="/movies" className="navigation__link">
+            <NavLink to="/movies" className="navigation__link" activeClassName="navigation__link_active">
               Фильмы
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link path="/saved-movies" className="navigation__link">
+            <NavLink to="/saved-movies" className="navigation__link" activeClassName="navigation__link_active">
               Сохранённые фильмы
-            </Link>
+            </NavLink>
           </li>
         </ul>
-        <Link path="/profile" className="navigation__profile-button">
+        <Link to="/profile" className="navigation__profile-button">
           Аккаунт
         </Link>
       </div>

@@ -5,10 +5,10 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <p className="footer__">Учебный проект Яндекс.Практикум х BeatFilm.</p>
+      <p className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</p>
       <p className="footer__copyright">&copy; {currentYear}</p>
-      <ul class="footer__links">
-        <li>
+      <ul className="footer__links">
+        <li className="footer__item">
           <a
             className="footer__link"
             href="https://praktikum.yandex.ru/"
@@ -18,7 +18,7 @@ export default function Footer() {
             Яндекс.Практикум
           </a>
         </li>
-        <li>
+        <li className="footer__item">
           <a
             className="footer__link"
             href="https://github.com/nklazuta"
@@ -28,7 +28,7 @@ export default function Footer() {
             Github
           </a>
         </li>
-        <li>
+        <li className="footer__item">
           <a
             className="footer__link"
             href="https://www.facebook.com/nklazuta"
