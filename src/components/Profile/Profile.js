@@ -4,9 +4,30 @@ import { user } from "../../utils";
 
 export default function Profile() {
   const [name, setName] = useState(user.name);
+  const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
+  const [isEditContainerVisible, setEditContainerVisible] = useState(true);
+
+  const submitButtonClassName = `form__submit ${
+    isSubmitButtonVisible && "form__submit_type_visible"
+  }`;
+
+  const editContainerClassName = `form__edit-container ${
+    isEditContainerVisible && "form__edit-container_type_visible"
+  }`;
 
   const handleNameChange = (evt) => {
     setName(evt.target.value);
+  };
+
+  const handleEditButton = () => {
+    setSubmitButtonVisible(true);
+    setEditContainerVisible(false);
+  };
+
+  const handleSubmitButton = (evt) => {
+    evt.preventDefault();
+    setSubmitButtonVisible(false);
+    setEditContainerVisible(true);
   };
 
   return (
@@ -32,14 +53,26 @@ export default function Profile() {
           <input className="form__value" value={user.mail} />
         </label>
       </form>
-      <button className="form__submit form__submit_type_profile" type="submit">
-        Редактировать
+      <div className={editContainerClassName}>
+        <button
+          className="form__edit-button"
+          type="button"
+          onClick={handleEditButton}
+        >
+          Редактировать
+        </button>
+        <p className="form__redirect">
+          <Link
+            to="/signin"
+            className="form__redirect-button form__redirect-button_type_profile"
+          >
+            Выйти из аккаунта
+          </Link>
+        </p>
+      </div>
+      <button className={submitButtonClassName} type="submit" onClick={handleSubmitButton}>
+        Сохранить
       </button>
-      <p className="form__redirect">
-        <Link to="/signin" className="form__redirect-button form__redirect-button_type_profile">
-          Выйти из аккаунта
-        </Link>
-      </p>
     </section>
   );
 }
