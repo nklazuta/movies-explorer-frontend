@@ -4,11 +4,15 @@ import MoviesCard from "../MoviesCard";
 export default function MoviesCardList({ movies }) {
   return (
     <section className="movies">
-      <ul className="movies__list">
-        {movies.map((movie) => (
-          <MoviesCard key={movie.movieId} {...{ movie }} />
-        ))}
-      </ul>
+      {!movies ? (
+        <p className="movies__not-found">Фильмы не найдены</p>
+      ) : (
+        <ul className="movies__list">
+          {movies.map((movie) => (
+            <MoviesCard key={movie.movieId} {...{ movie }} />
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
