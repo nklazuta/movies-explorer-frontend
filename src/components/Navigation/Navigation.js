@@ -5,7 +5,7 @@ export default function Navigation() {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const navigationClassName = `navigation ${
-    isMenuOpen && "navigation_type_menu-open"
+    isMenuOpen && "navigation_menu-open"
   }`;
 
   const toggleMenu = () => {
@@ -22,17 +22,17 @@ export default function Navigation() {
       />
       <div className="navigation__wrapper">
         <ul className="navigation__list">
-          <li>
-            <NavLink exact to="/" className="navigation__link">
+          <li className="navigation__item">
+            <NavLink exact to="/" className="navigation__link navigation__link_hidden" activeClassName="navigation__link_active">
               Главная
             </NavLink>
           </li>
-          <li>
+          <li className="navigation__item">
             <NavLink to="/movies" className="navigation__link" activeClassName="navigation__link_active">
               Фильмы
             </NavLink>
           </li>
-          <li>
+          <li className="navigation__item">
             <NavLink to="/saved-movies" className="navigation__link" activeClassName="navigation__link_active">
               Сохранённые фильмы
             </NavLink>
