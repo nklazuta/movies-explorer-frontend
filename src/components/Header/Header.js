@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import HeaderLogo from "../HeaderLogo";
 import Navigation from "../Navigation";
 import NavAuth from "../NavAuth";
+import "./Header.css";
 
 export default function Header({ isLoggedIn }) {
   const isMain = useRouteMatch({ path: "/", exact: true });
