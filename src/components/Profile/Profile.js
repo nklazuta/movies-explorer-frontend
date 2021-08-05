@@ -36,18 +36,22 @@ export default function Profile() {
       <form className="form__profile">
         <label className="form__subtitle">
           Имя
-          <input
-            className="form__input form__input_type_name"
-            id="name-input"
-            name="name"
-            type="text"
-            placeholder="Виталий"
-            minLength="2"
-            maxLength="30"
-            value={name}
-            onChange={handleNameChange}
-            required
-          />
+          {isSubmitButtonVisible ? (
+            <input
+              className="form__input form__input_type_name"
+              id="name-input"
+              name="name"
+              type="text"
+              placeholder="Виталий"
+              minLength="2"
+              maxLength="30"
+              value={name}
+              onChange={handleNameChange}
+              required
+            />
+          ) : (
+            <input className="form__value" value={user.name} />
+          )}
         </label>
         <label className="form__subtitle">
           E-mail
@@ -71,7 +75,11 @@ export default function Profile() {
           </Link>
         </p>
       </div>
-      <button className={submitButtonClassName} type="submit" onClick={handleSubmitButton}>
+      <button
+        className={submitButtonClassName}
+        type="submit"
+        onClick={handleSubmitButton}
+      >
         Сохранить
       </button>
     </section>
