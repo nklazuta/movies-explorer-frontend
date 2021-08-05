@@ -62,7 +62,7 @@
 .navigation__list {
   list-style: none;
   margin: 0;
-  padding: 129px 0 0;
+  padding: 144px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,8 +76,8 @@
   color: #000;
   text-align: center;
   text-decoration: none;
-  margin: 0 0 7px;
-  padding: 15px 0 0;
+  margin: 0 0 15px;
+  padding: 0 0 7px;
   border: none;
   cursor: pointer;
   transition: opacity .5s ease;
@@ -124,12 +124,12 @@
   }
 
   .navigation__list {
-    padding: 137px 0 0;
+    padding: 159px 0 0;
   }
 
   .navigation__link {
-    margin: 0 0 4px;
-    padding: 22px 0 0;
+    margin: 0 0 22px;
+    padding: 0 0 4px;
   }
 
   .navigation__profile-button {

@@ -4,7 +4,7 @@
 .page {
   min-width: 320px;
   max-width: 1280px;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
