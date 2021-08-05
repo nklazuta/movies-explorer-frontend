@@ -26,7 +26,7 @@ export default function AboutProject() {
       </ul>
       <div className="about-project__time-box">
         <div className="about-project__weeks">
-          <p className="about-project__time about-project__time_work_backend">
+          <p className="about-project__time about-project__time_type_backend">
             1 неделя
           </p>
           <p className="about-project__work">Back-end</p>

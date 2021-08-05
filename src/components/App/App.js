@@ -14,7 +14,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div className="App">
+    <div className="app">
       <Header {...isLoggedIn} />
       <Switch>
         <Route exact path="/">
