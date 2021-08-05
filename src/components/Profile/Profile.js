@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Form from "../Form";
 import { user } from "../../utils";
 
 export default function Profile() {
@@ -8,11 +8,11 @@ export default function Profile() {
   const [isEditContainerVisible, setEditContainerVisible] = useState(true);
 
   const submitButtonClassName = `form__submit ${
-    isSubmitButtonVisible && "form__submit_type_visible"
+    !isSubmitButtonVisible && "form__submit_type_invisible"
   }`;
 
-  const editContainerClassName = `form__edit-container ${
-    isEditContainerVisible && "form__edit-container_type_visible"
+  const containerClassName = `form__container ${
+    !isEditContainerVisible && "form__container_type_invisible"
   }`;
 
   const handleNameChange = (evt) => {
@@ -31,9 +31,27 @@ export default function Profile() {
   };
 
   return (
-    <section className="form">
-      <h2 className="form__title">{`Привет, ${user.name}!`}</h2>
-      <form className="form__profile">
+    <section className="profile">
+      <Form
+        title={`Привет, ${user.name}!`}
+        submitButtonClass={submitButtonClassName}
+        buttonText="Сохранить"
+        onSubmit={handleSubmitButton}
+        redirectContainer={containerClassName}
+        editButton={
+          <button
+            className="form__edit-button"
+            type="button"
+            onClick={handleEditButton}
+          >
+            Редактировать
+          </button>
+        }
+        redirectText=""
+        redirectLink="/signin"
+        type="profile"
+        redirect="Выйти из аккаунта"
+      >
         <label className="form__subtitle">
           Имя
           {isSubmitButtonVisible ? (
@@ -57,31 +75,7 @@ export default function Profile() {
           E-mail
           <input className="form__value" value={user.mail} />
         </label>
-      </form>
-      <div className={editContainerClassName}>
-        <button
-          className="form__edit-button"
-          type="button"
-          onClick={handleEditButton}
-        >
-          Редактировать
-        </button>
-        <p className="form__redirect">
-          <Link
-            to="/signin"
-            className="form__redirect-button form__redirect-button_type_profile"
-          >
-            Выйти из аккаунта
-          </Link>
-        </p>
-      </div>
-      <button
-        className={submitButtonClassName}
-        type="submit"
-        onClick={handleSubmitButton}
-      >
-        Сохранить
-      </button>
+      </Form>
     </section>
   );
 }

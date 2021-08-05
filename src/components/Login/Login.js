@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Form from "../Form";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,10 +13,24 @@ export default function Login() {
     setPassword(evt.target.value);
   };
 
+  const handleSubmitButton = (evt) => {
+    evt.preventDefault();
+  };
+
   return (
-    <section className="form">
-      <h2 className="form__title">Рады видеть!</h2>
-      <form className="form__login">
+    <section className="login">
+      <Form
+        title="Рады видеть!"
+        submitButtonClass="form__submit"
+        buttonText="Войти"
+        onSubmit={handleSubmitButton}
+        redirectContainer="form__container"
+        editButton=""
+        redirectText="Ещё не зарегистрированы?"
+        redirectLink="/signup"
+        type="login"
+        redirect="Регистрация"
+      >
         <label className="form__subtitle">
           E-mail
           <input
@@ -45,16 +59,7 @@ export default function Login() {
             required
           />
         </label>
-        <button className="form__submit" type="submit">
-          Войти
-        </button>
-      </form>
-      <p className="form__redirect">
-        Ещё не зарегистрированы?{" "}
-        <Link to="/signin" className="form__redirect-button">
-          Регистрация
-        </Link>
-      </p>
+      </Form>
     </section>
   );
 }
