@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Form from "../Form";
+import Form from "../Form/Form";
 import "./Profile.css";
 import { user } from "../../utils";
 

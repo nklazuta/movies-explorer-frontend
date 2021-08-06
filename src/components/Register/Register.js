@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import HeaderLogo from "../HeaderLogo";
-import Form from "../Form";
+import HeaderLogo from "../HeaderLogo/HeaderLogo";
+import Form from "../Form/Form";
 import "./Register.css";
 
 export default function Register() {
