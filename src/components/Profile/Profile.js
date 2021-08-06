@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "../Form/Form";
 import "./Profile.css";
-import { user } from "../../utils";
+import { user } from "../../utils/test-data";
 
 export default function Profile() {
   const [name, setName] = useState(user.name);

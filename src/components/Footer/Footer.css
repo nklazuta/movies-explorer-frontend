@@ -6,7 +6,6 @@
   margin: 0 auto;
   display: grid;
   justify-content: center;
-  grid-template-rows: repeat(3, 1fr);
   grid-template-areas:
     "title"
     "links"
@@ -73,8 +72,6 @@
     width: calc(100% - 60px);
     padding-bottom: 20px;
     justify-content: space-between;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
       "title title"
       "copyright links";
@@ -95,7 +92,7 @@
   }
 
   .footer__links {
-    grid-template-columns: auto;
+    grid-template-columns: repeat(3, minmax(min-content, max-content));
     grid-template-rows: 1fr;
     gap: 20px;
     justify-content: end;

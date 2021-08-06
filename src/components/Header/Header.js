@@ -1,6 +1,5 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useRouteMatch  } from "react-router-dom";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Navigation from "../Navigation/Navigation";
 import NavAuth from "../NavAuth/NavAuth";
@@ -16,7 +15,7 @@ export default function Header({ isLoggedIn }) {
   const headerClassName = `header
   ${isMain && "header_type_main"}
   ${isAuth && "header_type_hidden"}
-  ${isNotFoundPage && "header_type_hidden"}`;
+  `;
 
   return (
     <header className={headerClassName}>

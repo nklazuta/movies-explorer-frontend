@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FilterCheckbox from "../FilterCheckbox";
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 export default function SearchForm() {
   const [movie, setMovie] = useState("");

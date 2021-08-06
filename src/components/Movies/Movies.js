@@ -1,9 +1,9 @@
 import React from "react";
-import SearchForm from "../SearchForm";
-import MoviesCardList from "../MoviesCardList";
-import Preloader from "../Preloader";
-import Footer from "../Footer";
-import { movies } from "../../utils";
+import SearchForm from "../SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Preloader from "../Preloader/Preloader";
+import Footer from "../Footer/Footer";
+import { movies } from "../../utils/test-data";
 
 export default function Movies() {
   const isLoading = false;

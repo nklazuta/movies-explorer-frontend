@@ -14,7 +14,7 @@ export default function Portfolio() {
             rel="noopener noreferrer"
           >
             <p className="portfolio__text">Статичный сайт</p>
-            <div className="portfolio__arrow" />
+            <p className="portfolio__arrow">&#129125;</p>
           </a>
         </li>
         <li className="portfolio__item">
@@ -25,7 +25,7 @@ export default function Portfolio() {
             rel="noopener noreferrer"
           >
             <p className="portfolio__text">Адаптивный сайт</p>
-            <div className="portfolio__arrow" />
+            <p className="portfolio__arrow">&#129125;</p>
           </a>
         </li>
         <li className="portfolio__item">
@@ -36,7 +36,7 @@ export default function Portfolio() {
             rel="noopener noreferrer"
           >
             <p className="portfolio__text">Одностраничное приложение</p>
-            <div className="portfolio__arrow" />
+            <p className="portfolio__arrow">&#129125;</p>
           </a>
         </li>
       </ul>

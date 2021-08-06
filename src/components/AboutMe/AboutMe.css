@@ -12,7 +12,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 1.21;
-  letter-spacing: -0.4em;
+  letter-spacing: -0.04em;
   text-align: left;
   margin: 0 0 60px;
   padding: 0 0 28px;
@@ -22,8 +22,6 @@
 .about-me__student {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
   padding: 0 0 69px;
   margin: 0;
   grid-template-areas:
@@ -40,7 +38,7 @@
   font-weight: 400;
   font-size: 30px;
   line-height: 1.21;
-  letter-spacing: -0.4em;
+  letter-spacing: -0.04em;
   text-align: left;
   margin: 0;
   padding: 40px 0 20px;
@@ -72,20 +70,22 @@
   grid-area: links;
   list-style: none;
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: 1fr;
   gap: 26px;
   justify-content: start;
   padding: 0;
   margin: 0;
+  grid-template-areas:
+    "link link";
 }
 
 .about-me__link {
+  grid-area: link;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.21;
   text-decoration: none;
+  color: #000;
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -99,7 +99,6 @@
 .about-me__photo {
   grid-area: photo;
   min-width: 255px;
-  width: 100%;
   object-fit: contain;
   object-position: center;
   border-radius: 10px;
@@ -119,8 +118,6 @@
   }
 
   .about-me__student {
-    grid-template-columns: 2fr;
-    grid-template-rows: auto;
     justify-content: space-between;
     column-gap: 49px;
     padding: 0 0 90px;
@@ -151,6 +148,10 @@
   .about-me__links {
     gap: 20px;
   }
+
+  .about-me__photo {
+    max-width: 255px;
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -180,5 +181,9 @@
     font-size: 14px;
     line-height: 1.57;
     padding: 0 0 99px;
+  }
+
+  .about-me__photo {
+    max-width: 270px;
   }
 }
