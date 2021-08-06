@@ -99,6 +99,7 @@
 .about-me__photo {
   grid-area: photo;
   min-width: 255px;
+  max-width: 292px;
   object-fit: contain;
   object-position: center;
   border-radius: 10px;
