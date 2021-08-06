@@ -11,11 +11,11 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import "./App.css";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <div className="app">
-      <Header {...isLoggedIn} />
+      <Header {...{isLoggedIn}} />
       <Switch>
         <Route exact path="/">
           <Main />
