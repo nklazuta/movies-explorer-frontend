@@ -1,9 +1,9 @@
 import React from "react";
-import Promo from "../Promo";
-import AboutProject from "../AboutProject";
-import Techs from "../Techs";
-import AboutMe from "../AboutMe";
-import Footer from "../Footer";
+import Promo from "../Promo/Promo";
+import AboutProject from "../AboutProject/AboutProject";
+import Techs from "../Techs/Techs";
+import AboutMe from "../AboutMe/AboutMe";
+import Footer from "../Footer/Footer";
 import "./Main.css";
 
 export default function Main() {

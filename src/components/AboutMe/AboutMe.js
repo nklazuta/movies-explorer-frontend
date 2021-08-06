@@ -1,5 +1,7 @@
 import React from "react";
-import Portfolio from "../Portfolio";
+import Portfolio from "../Portfolio/Portfolio";
+import photo from "../../images/photo.jpg"
+import "./AboutMe.css";
 
 export default function AboutMe() {
   return (
@@ -41,7 +43,7 @@ export default function AboutMe() {
             </a>
           </li>
         </ul>
-        <div className="about-me__photo" />
+        <img className="about-me__photo" src={photo} alt="Фотография студента" />
       </div>
       <Portfolio />
     </article>

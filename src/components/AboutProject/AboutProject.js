@@ -1,4 +1,5 @@
 import React from "react";
+import "./AboutProject.css";
 
 export default function AboutProject() {
   return (
@@ -25,7 +26,7 @@ export default function AboutProject() {
         </li>
       </ul>
       <div className="about-project__time-box">
-        <div className="about-project__weeks">
+        <div className="about-project__weeks about-project__weeks_type_backend">
           <p className="about-project__time about-project__time_type_backend">
             1 неделя
           </p>

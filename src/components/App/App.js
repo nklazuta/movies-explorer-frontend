@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import Header from "../Header";
-import Main from "../Main";
-import Movies from "../Movies";
-import SavedMovies from "../SavedMovies";
-import Profile from "../Profile";
-import Register from "../Register";
-import Login from "../Login";
-import PageNotFound from "../PageNotFound";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Profile from "../Profile/Profile";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import PageNotFound from "../PageNotFound/PageNotFound";
 import "./App.css";
 
 export default function App() {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Form from "../Form";
+import "./Profile.css";
 import { user } from "../../utils";
 
 export default function Profile() {

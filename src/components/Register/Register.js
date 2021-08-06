@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import HeaderLogo from "../HeaderLogo";
 import Form from "../Form";
+import "./Register.css";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -24,6 +26,7 @@ export default function Register() {
 
   return (
     <section className="register">
+      <HeaderLogo />
       <Form
         title="Добро пожаловать!"
         submitButtonClass="form__submit"

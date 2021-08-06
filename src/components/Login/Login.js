@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import HeaderLogo from "../HeaderLogo";
 import Form from "../Form";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,6 +21,7 @@ export default function Login() {
 
   return (
     <section className="login">
+      <HeaderLogo />
       <Form
         title="Рады видеть!"
         submitButtonClass="form__submit"
