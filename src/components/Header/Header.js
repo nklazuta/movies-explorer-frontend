@@ -1,9 +1,9 @@
 import React from "react";
 import { useRouteMatch } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
-import HeaderLogo from "../HeaderLogo";
-import Navigation from "../Navigation";
-import NavAuth from "../NavAuth";
+import HeaderLogo from "../HeaderLogo/HeaderLogo";
+import Navigation from "../Navigation/Navigation";
+import NavAuth from "../NavAuth/NavAuth";
 import "./Header.css";
 
 export default function Header({ isLoggedIn }) {
