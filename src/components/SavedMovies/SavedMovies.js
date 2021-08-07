@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
@@ -10,10 +11,13 @@ export default function SavedMovies() {
   const movies = savedMovies;
 
   return (
-    <main className="main">
-      <SearchForm />
-      {!isLoading ? <MoviesCardList {...{ movies }} /> : <Preloader />}
+    <>
+      <Header />
+      <main className="main">
+        <SearchForm />
+        {!isLoading ? <MoviesCardList {...{ movies }} /> : <Preloader />}
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

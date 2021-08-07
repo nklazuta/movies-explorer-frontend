@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Header from "../Header/Header";
 import Form from "../Form/Form";
 import "./Profile.css";
 import { user } from "../../utils/test-data";
@@ -32,51 +33,54 @@ export default function Profile() {
   };
 
   return (
-    <section className="profile">
-      <Form
-        title={`Привет, ${user.name}!`}
-        submitButtonClass={submitButtonClassName}
-        buttonText="Сохранить"
-        onSubmit={handleSubmitButton}
-        redirectContainer={containerClassName}
-        editButton={
-          <button
-            className="form__edit-button"
-            type="button"
-            onClick={handleEditButton}
-          >
-            Редактировать
-          </button>
-        }
-        redirectText=""
-        redirectLink="/signin"
-        type="profile"
-        redirect="Выйти из аккаунта"
-      >
-        <label className="form__subtitle">
-          Имя
-          {isSubmitButtonVisible ? (
-            <input
-              className="form__input form__input_type_name"
-              id="name-input"
-              name="name"
-              type="text"
-              placeholder="Виталий"
-              minLength="2"
-              maxLength="30"
-              value={name}
-              onChange={handleNameChange}
-              required
-            />
-          ) : (
-            <input className="form__value" value={user.name} />
-          )}
-        </label>
-        <label className="form__subtitle">
-          E-mail
-          <input className="form__value" value={user.mail} />
-        </label>
-      </Form>
-    </section>
+    <>
+      <Header />
+      <section className="profile">
+        <Form
+          title={`Привет, ${user.name}!`}
+          submitButtonClass={submitButtonClassName}
+          buttonText="Сохранить"
+          onSubmit={handleSubmitButton}
+          redirectContainer={containerClassName}
+          editButton={
+            <button
+              className="form__edit-button"
+              type="button"
+              onClick={handleEditButton}
+            >
+              Редактировать
+            </button>
+          }
+          redirectText=""
+          redirectLink="/signin"
+          type="profile"
+          redirect="Выйти из аккаунта"
+        >
+          <label className="form__subtitle">
+            Имя
+            {isSubmitButtonVisible ? (
+              <input
+                className="form__input form__input_type_name"
+                id="name-input"
+                name="name"
+                type="text"
+                placeholder="Виталий"
+                minLength="2"
+                maxLength="30"
+                value={name}
+                onChange={handleNameChange}
+                required
+              />
+            ) : (
+              <input className="form__value" value={user.name} />
+            )}
+          </label>
+          <label className="form__subtitle">
+            E-mail
+            <input className="form__value" value={user.mail} />
+          </label>
+        </Form>
+      </section>
+    </>
   );
 }

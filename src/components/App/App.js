@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -11,11 +10,11 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import "./App.css";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
 
   return (
     <div className="app">
-      <Header {...{isLoggedIn}} />
+
       <Switch>
         <Route exact path="/">
           <Main />

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Navigation.css";
 
-export default function Navigation() {
-  const isMain = useRouteMatch({ path: "/", exact: true });
+export default function Navigation({isMain}) {
+
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {

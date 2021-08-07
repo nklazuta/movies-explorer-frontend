@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Header from "../Header/Header";
 import Promo from "../Promo/Promo";
 import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs";
@@ -7,13 +8,18 @@ import Footer from "../Footer/Footer";
 import "./Main.css";
 
 export default function Main() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <main className="main">
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
+    <>
+      <Header {...{ isLoggedIn }} />
+      <main className="main">
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }

@@ -7,14 +7,11 @@ import "./Header.css";
 
 export default function Header({ isLoggedIn }) {
   const isMain = useRouteMatch({ path: "/", exact: true });
-  const isLoginPage = useRouteMatch({ path: "/signin" });
-  const isRegisterPage = useRouteMatch({ path: "/signup" });
-  const isNotFoundPage = useRouteMatch({ path: "*" });
-  const isAuth = isLoginPage || isRegisterPage;
+
 
   const headerClassName = `header
   ${isMain && "header_type_main"}
-  ${isAuth && "header_type_hidden"}
+
   `;
 
   return (
@@ -22,7 +19,7 @@ export default function Header({ isLoggedIn }) {
       <HeaderLogo />
       <Switch>
         <Route exact path="/">
-          {isLoggedIn ? <Navigation /> : <NavAuth />}
+          {isLoggedIn ? <Navigation {...{isMain}} /> : <NavAuth />}
         </Route>
         <Route path="/movies">
           <Navigation />
