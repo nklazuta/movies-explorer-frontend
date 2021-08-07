@@ -4,6 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import Footer from "../Footer/Footer";
+import "./SavedMovies.css";
 import { savedMovies } from "../../utils/test-data";
 
 export default function SavedMovies() {
@@ -13,7 +14,7 @@ export default function SavedMovies() {
   return (
     <>
       <Header />
-      <main className="main">
+      <main className="saved-movies">
         <SearchForm />
         {!isLoading ? <MoviesCardList {...{ movies }} /> : <Preloader />}
       </main>

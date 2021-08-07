@@ -1,0 +1,55 @@
+.checkbox {
+  min-width: 169px;
+  padding: 45px 0;
+  margin: 0 auto;
+  text-align: right;
+}
+
+.checkbox__button_invisible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.checkbox__button {
+  display: inline-block;
+  vertical-align: middle;
+  width: 36px;
+  height: 20px;
+  background: transparent center no-repeat url('../../images/checkbox-disactive.svg');
+}
+
+.checkbox__button_invisible:checked + .checkbox__button {
+  background: transparent center no-repeat url('../../images/checkbox-active.svg');
+}
+
+.checkbox__title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.64;
+  margin: 0;
+  padding: 0 0 0 13px;
+}
+
+@media screen and (min-width: 500px) {
+  .checkbox {
+    padding: 0 19px;
+    margin: auto;
+    border-left: 1px solid #cbcbcb;
+  }
+
+  .checkbox__title {
+    font-size: 13px;
+    line-height: 1.38;
+    padding: 0 0 0 15px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .checkbox {
+    padding: 0 29px;
+  }
+}

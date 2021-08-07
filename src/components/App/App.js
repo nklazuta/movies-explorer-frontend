@@ -10,11 +10,8 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import "./App.css";
 
 export default function App() {
-
-
   return (
     <div className="app">
-
       <Switch>
         <Route exact path="/">
           <Main />

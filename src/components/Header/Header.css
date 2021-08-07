@@ -1,5 +1,7 @@
 .header {
+  width: 100%;
   max-width: 1280px;
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 18px 14px;
   display: flex;
@@ -8,10 +10,6 @@
 
 .header_type_main {
   background-color: #073042;
-}
-
-.header_type_hidden {
-  display: none;
 }
 
 @media screen and (min-width: 500px) {

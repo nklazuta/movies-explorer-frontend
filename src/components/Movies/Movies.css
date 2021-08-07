@@ -1,0 +1,8 @@
+.movies {
+  width: 100%;
+  flex: 1;
+  margin: 0 auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}

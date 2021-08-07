@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouteMatch } from "react-router-dom";
+import "./MoviesCard.css";
 
 export default function MoviesCard({ movie }) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
