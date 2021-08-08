@@ -1,0 +1,55 @@
+.cards {
+  width: calc(100% - 20px);
+  margin: 0 auto;
+  padding: 40px 0 26px;
+}
+
+.cards__not-found {
+  color: #a0a0a0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  margin: auto;
+  padding-top: 45px;
+}
+
+.cards__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  justify-content: center;
+}
+
+@media screen and (min-width: 500px) {
+  .cards {
+    width: calc(100% - 60px);
+    padding: 70px 0 30px;
+  }
+
+  .movies-not-found {
+    font-size: 16px;
+    line-height: 1.19;
+    padding-top: 70px;
+  }
+
+  .cards__list {
+    gap: 30px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .cards {
+    width: calc(100% - 140px);
+    padding: 70px 0 10px;
+  }
+
+  .cards__list {
+    row-gap: 37px;
+    column-gap: 24px;
+  }
+}

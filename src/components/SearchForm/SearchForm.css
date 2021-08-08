@@ -52,8 +52,7 @@
   flex-basis: 80px;
   width: 80px;
   height: 34px;
-  background: transparent center/15px no-repeat url('../../images/search-icon.svg');
-  background-color: #3456f3;
+  background: #3456f3 center/15px no-repeat url('../../images/search-icon.svg');
   border: none;
   border-radius: 48px;
   box-sizing: border-box;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./FilterCheckbox.css";
 
 export default function FilterCheckbox() {
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleFilterCheckboxClick = () => {
     setIsChecked(!isChecked);

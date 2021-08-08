@@ -1,100 +1,81 @@
-import banksy from "../images/banksy-most-wanted.jpg";
-import design from "../images/33-design-words.jpg";
-import booksellers from "../images/the-booksellers.jpg";
-
 const movies = [
   {
-    duration: "1ч 47м",
-    image: { design },
+    duration: "1ч 37м",
     movieId: 1,
-    nameRU: "33 слова о дизайне",
+    nameRU: "Книготорговцы",
   },
   {
     duration: "1ч 37м",
-    image: { booksellers },
     movieId: 2,
     nameRU: "Книготорговцы",
   },
   {
-    duration: "1ч 42м",
-    image: { banksy },
+    duration: "1ч 37м",
     movieId: 3,
-    nameRU: "В погоне за Бэнкси",
-  },
-  {
-    duration: "1ч 47м",
-    image: { design },
-    movieId: 4,
-    nameRU: "33 слова о дизайне",
+    nameRU: "Книготорговцы",
   },
   {
     duration: "1ч 37м",
-    image: { booksellers },
+    movieId: 4,
+    nameRU: "Книготорговцы",
+  },
+  {
+    duration: "1ч 37м",
     movieId: 5,
     nameRU: "Книготорговцы",
   },
   {
-    duration: "1ч 42м",
-    image: { banksy },
+    duration: "1ч 37м",
     movieId: 6,
-    nameRU: "В погоне за Бэнкси",
-  },
-  {
-    duration: "1ч 47м",
-    image: { design },
-    movieId: 7,
-    nameRU: "33 слова о дизайне",
+    nameRU: "Книготорговцы",
   },
   {
     duration: "1ч 37м",
-    image: { booksellers },
+    movieId: 7,
+    nameRU: "Книготорговцы",
+  },
+  {
+    duration: "1ч 37м",
     movieId: 8,
     nameRU: "Книготорговцы",
   },
   {
-    duration: "1ч 42м",
-    image: { banksy },
+    duration: "1ч 37м",
     movieId: 9,
-    nameRU: "В погоне за Бэнкси",
-  },
-  {
-    duration: "1ч 47м",
-    image: { design },
-    movieId: 10,
-    nameRU: "33 слова о дизайне",
+    nameRU: "Книготорговцы",
   },
   {
     duration: "1ч 37м",
-    image: { booksellers },
+    movieId: 10,
+    nameRU: "Книготорговцы",
+  },
+  {
+    duration: "1ч 37м",
     movieId: 11,
     nameRU: "Книготорговцы",
   },
   {
-    duration: "1ч 42м",
-    image: { banksy },
+    duration: "1ч 37м",
     movieId: 12,
-    nameRU: "В погоне за Бэнкси",
+    nameRU: "Книготорговцы",
   },
 ];
 
 const savedMovies = [
   {
-    duration: "1ч 47м",
-    image: { design },
+    duration: "1ч 37м",
     movieId: 1,
-    nameRU: "33 слова о дизайне",
+    nameRU: "Книготорговцы",
   },
   {
     duration: "1ч 37м",
-    image: { booksellers },
     movieId: 2,
     nameRU: "Книготорговцы",
   },
   {
-    duration: "1ч 42м",
-    image: { banksy },
+    duration: "1ч 37м",
     movieId: 3,
-    nameRU: "В погоне за Бэнкси",
+    nameRU: "Книготорговцы",
   },
 ];
 

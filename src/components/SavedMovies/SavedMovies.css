@@ -1,4 +1,5 @@
 .saved-movies {
+  width: 100%;
   flex: 1;
   margin: 0 auto;
 }

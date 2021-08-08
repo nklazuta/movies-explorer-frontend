@@ -19,6 +19,7 @@
   width: 36px;
   height: 20px;
   background: transparent center no-repeat url('../../images/checkbox-disactive.svg');
+  cursor: pointer;
 }
 
 .checkbox__button_invisible:checked + .checkbox__button {
