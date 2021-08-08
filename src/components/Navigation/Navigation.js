@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Navigation.css";
 
-export default function Navigation({isMain}) {
-
+export default function Navigation({ isMain }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -21,6 +20,12 @@ export default function Navigation({isMain}) {
         onClick={toggleMenu}
       />
       <div className="navigation__wrapper">
+        <button
+          className="navigation__close-button"
+          type="button"
+          aria-label="Закрыть меню"
+          onClick={toggleMenu}
+        />
         <ul className="navigation__list">
           <li className="navigation__item">
             <NavLink
@@ -64,6 +69,7 @@ export default function Navigation({isMain}) {
           Аккаунт
         </Link>
       </div>
+      <div className="navigation__background"></div>
     </nav>
   );
 }
