@@ -41,14 +41,19 @@
   line-height: 1.22;
   text-align: center;
   color: #3456F3;
-  margin: 0 auto;
-  padding-bottom: 30px;
+  text-decoration: none;
+  margin: 0 auto 30px;
+  padding: 0;
   cursor: pointer;
   transition: opacity 0.5s ease;
 }
 
 .not-found__button-to-main:hover {
   opacity: 0.7;
+}
+
+.not-found__button-to-main:focus {
+  outline: 1px solid #3456F3;
 }
 
 @media screen and (min-width: 500px) {
@@ -66,12 +71,12 @@
   .not-found__button-to-main {
     font-size: 14px;
     line-height: 1.21;
-    padding-bottom: 222px;
+    margin-bottom: 222px;
   }
 }
 
 @media screen and (min-width: 800px) {
   .not-found__button-to-main {
-    padding-bottom: 60px;
+    margin-bottom: 60px;
   }
 }

@@ -6,6 +6,7 @@
   padding: 18px 14px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header_type_main {

@@ -11,8 +11,8 @@
   color: #fff;
   text-align: right;
   text-decoration: none;
-  margin: 0;
-  padding: 0 14px 0 0;
+  margin: 0 14px 0 0;
+  padding: 0;
   border: none;
   cursor: pointer;
   transition: opacity 0.5s ease;
@@ -47,7 +47,7 @@
   .nav-auth__register {
     font-size: 12px;
     line-height: 1.33;
-    padding: 0 30px 0 0;
+    margin: 0 30px 0 0;
   }
 
   .nav-auth__login {

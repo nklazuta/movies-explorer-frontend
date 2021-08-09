@@ -1,6 +1,6 @@
 .header-logo {
   margin: 0;
-  padding: 0;
+  padding: 1px;
   border: none;
   cursor: pointer;
   transition: opacity 0.5s ease;
