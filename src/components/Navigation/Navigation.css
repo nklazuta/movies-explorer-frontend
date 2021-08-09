@@ -35,7 +35,7 @@
   justify-content: space-between;
   position: fixed;
   top: 0;
-  right: 0;
+  right: -520px;
   transition: right .5s;
   background: #fff;
   opacity: 1;
@@ -43,6 +43,7 @@
 
 .navigation_menu-open .navigation__wrapper {
   display: flex;
+  right: 0;
 }
 
 .navigation_menu-open .navigation__background {
