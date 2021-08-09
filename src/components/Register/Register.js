@@ -20,7 +20,7 @@ export default function Register() {
     setPassword(evt.target.value);
   };
 
-  const handleSubmitButton = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
   };
 
@@ -29,17 +29,14 @@ export default function Register() {
       <HeaderLogo />
       <Form
         title="Добро пожаловать!"
-        submitButtonClass="form__submit"
+        type="register"
         buttonText="Зарегистрироваться"
-        onSubmit={handleSubmitButton}
-        redirectContainer="form__container"
-        editButton=""
+        onSubmit={handleSubmit}
         redirectText="Уже зарегистрированы?"
         redirectLink="/signin"
-        type="register"
         redirect="Войти"
       >
-        <label className="form__subtitle">
+        <label className="form__label">
           Имя
           <input
             className="form__input form__input_type_name"
@@ -55,7 +52,7 @@ export default function Register() {
             required
           />
         </label>
-        <label className="form__subtitle">
+        <label className="form__label">
           E-mail
           <input
             className="form__input form__input_type_email"
@@ -69,7 +66,7 @@ export default function Register() {
             required
           />
         </label>
-        <label className="form__subtitle">
+        <label className="form__label">
           Пароль
           <input
             className="form__input form__input_type_password"

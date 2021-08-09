@@ -15,7 +15,7 @@ export default function Login() {
     setPassword(evt.target.value);
   };
 
-  const handleSubmitButton = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
   };
 
@@ -24,17 +24,15 @@ export default function Login() {
       <HeaderLogo />
       <Form
         title="Рады видеть!"
-        submitButtonClass="form__submit"
+        type="login"
         buttonText="Войти"
-        onSubmit={handleSubmitButton}
-        redirectContainer="form__container"
-        editButton=""
+        onSubmit={handleSubmit}
         redirectText="Ещё не зарегистрированы?"
         redirectLink="/signup"
-        type="login"
         redirect="Регистрация"
       >
-        <label className="form__subtitle">
+        <label className="form__label">
+
           E-mail
           <input
             className="form__input form__input_type_email"
@@ -48,7 +46,7 @@ export default function Login() {
             required
           />
         </label>
-        <label className="form__subtitle">
+        <label className="form__label">
           Пароль
           <input
             className="form__input form__input_type_password"

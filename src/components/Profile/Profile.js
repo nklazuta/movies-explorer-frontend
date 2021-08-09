@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../Header/Header";
-import Form from "../Form/Form";
 import "./Profile.css";
 import { user } from "../../utils/test-data";
 
@@ -9,12 +9,12 @@ export default function Profile() {
   const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
   const [isEditContainerVisible, setEditContainerVisible] = useState(true);
 
-  const submitButtonClassName = `form__submit ${
-    !isSubmitButtonVisible && "form__submit_type_invisible"
+  const submitButtonClassName = `profile__submit ${
+    !isSubmitButtonVisible && "profile__submit_type_invisible"
   }`;
 
-  const containerClassName = `form__container ${
-    !isEditContainerVisible && "form__container_type_invisible"
+  const containerClassName = `profile__container ${
+    !isEditContainerVisible && "profile__container_type_invisible"
   }`;
 
   const handleNameChange = (evt) => {
@@ -36,32 +36,14 @@ export default function Profile() {
     <>
       <Header />
       <section className="profile">
-        <Form
-          title={`Привет, ${user.name}!`}
-          submitButtonClass={submitButtonClassName}
-          buttonText="Сохранить"
-          onSubmit={handleSubmitButton}
-          redirectContainer={containerClassName}
-          editButton={
-            <button
-              className="form__edit-button"
-              type="button"
-              onClick={handleEditButton}
-            >
-              Редактировать
-            </button>
-          }
-          redirectText=""
-          redirectLink="/signin"
-          type="profile"
-          redirect="Выйти из аккаунта"
-        >
-          <label className="form__subtitle">
+        <form className="profile__form">
+          <h2 className="profile__title">{`Привет, ${user.name}!`}</h2>
+          <label className="profile__label">
             Имя
             {isSubmitButtonVisible ? (
               <input
-                className="form__input form__input_type_name"
-                id="name-input"
+                className="profile__input profile__input_type_name"
+                id="name"
                 name="name"
                 type="text"
                 placeholder="Виталий"
@@ -72,14 +54,33 @@ export default function Profile() {
                 required
               />
             ) : (
-              <input className="form__value" value={user.name} />
+              <input className="profile__value" value={user.name} disabled />
             )}
           </label>
-          <label className="form__subtitle">
+          <label className="profile__label">
             E-mail
-            <input className="form__value" value={user.mail} />
+            <input className="profile__value" value={user.mail} disabled />
           </label>
-        </Form>
+          <button
+            className={submitButtonClassName}
+            type="submit"
+            onClick={handleSubmitButton}
+          >
+            Сохранить
+          </button>
+          <div className={containerClassName}>
+            <button
+              className="profile__edit-button"
+              type="button"
+              onClick={handleEditButton}
+            >
+              Редактировать
+            </button>
+            <Link to="/signin" className="profile__redirect-button">
+              Выйти из аккаунта
+            </Link>
+          </div>
+        </form>
       </section>
     </>
   );

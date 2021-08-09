@@ -4,36 +4,30 @@ import "./Form.css";
 
 export default function Form({
   title,
-  submitButtonClass,
-  buttonText,
   onSubmit,
   children,
-  redirectContainer,
-  editButton,
+  type,
+  buttonText,
   redirectText,
   redirectLink,
-  type,
   redirect,
 }) {
   return (
-    <form className="form__register">
+    <form className="form" onSubmit={onSubmit}>
       <h2 className="form__title">{title}</h2>
       {children}
-      <button className={submitButtonClass} type="submit" onClick={onSubmit}>
+      <button className={`form__submit form__submit_type_${type}`} type="submit">
         {buttonText}
       </button>
-      <div className={redirectContainer}>
-        {editButton}
         <p className="form__redirect">
           {redirectText}
           <Link
             to={redirectLink}
-            className={`form__redirect-button form__redirect-button_type_${type}`}
+            className="form__redirect-button"
           >
             {redirect}
           </Link>
         </p>
-      </div>
     </form>
   );
 }
