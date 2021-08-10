@@ -56,7 +56,7 @@
   outline: 1px solid #3456F3;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
 
   .not-found__title {
     font-size: 140px;
@@ -75,7 +75,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .not-found__button-to-main {
     margin-bottom: 60px;
   }

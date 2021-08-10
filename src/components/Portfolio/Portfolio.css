@@ -76,7 +76,7 @@
   padding: 0;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .portfolio__heading {
     font-size: 18px;
     line-height: 1.11;
@@ -94,7 +94,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .portfolio__text {
     font-size: 30px;
     line-height: 1.67;

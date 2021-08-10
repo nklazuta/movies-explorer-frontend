@@ -9,7 +9,7 @@
   margin: 0 auto;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .login {
     align-items: flex-start;
   }

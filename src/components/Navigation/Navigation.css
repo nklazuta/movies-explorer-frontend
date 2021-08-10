@@ -136,7 +136,7 @@
   opacity: 0.8;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .navigation__burger {
     width: 44px;
     height: 44px;
@@ -164,7 +164,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .navigation {
     flex-direction: row;
     justify-content: space-between;

@@ -23,7 +23,7 @@
   width: 100%;
   display: grid;
   padding: 0 0 69px;
-  margin: 0;
+  margin: 0 auto;
   grid-template-areas:
     "photo"
     "name"
@@ -103,9 +103,10 @@
   object-fit: contain;
   object-position: center;
   border-radius: 10px;
+  justify-self: center;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .about-me {
     width: calc(100% - 100px);
     padding: 90px 0;
@@ -155,7 +156,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .about-me {
     width: calc(100% - 140px);
     padding: 110px 0 125px;

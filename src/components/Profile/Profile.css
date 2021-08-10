@@ -177,7 +177,7 @@
   outline: 1px solid #ff3055;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .profile__title {
     padding: 236px 0 96px;
   }
@@ -203,7 +203,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .profile__title {
     padding: 74px 0 123px;
   }

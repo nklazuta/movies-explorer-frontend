@@ -80,7 +80,7 @@
   padding: 0 0 14px 14px;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .movie__title {
     font-size: 13px;
     line-height: 1.23;
@@ -106,7 +106,7 @@
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .movie__title {
     padding: 16px 12px 17px 16px;
   }

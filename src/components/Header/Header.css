@@ -13,13 +13,13 @@
   background-color: #073042;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 560px) {
   .header {
     padding: 18px 30px;
   }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
   .header {
     padding: 18px 70px;
   }
