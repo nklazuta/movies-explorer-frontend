@@ -3,10 +3,10 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
 export default function SearchForm() {
-  const [movie, setMovie] = useState("");
+  const [search, setSearch] = useState("");
 
-  const handleMovieChange = (evt) => {
-    setMovie(evt.target.value);
+  const handlSearchChange = (evt) => {
+    setSearch(evt.target.value);
   };
 
   return (
@@ -20,8 +20,8 @@ export default function SearchForm() {
             type="search"
             name="movie"
             placeholder="Фильм"
-            value={movie}
-            onChange={handleMovieChange}
+            value={search}
+            onChange={handlSearchChange}
             required
           />
           <button

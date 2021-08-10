@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import "./MoviesCard.css";
-import booksellers from "../../images/the-booksellers.jpg";
 
 export default function MoviesCard({ movie }) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
@@ -20,7 +19,7 @@ export default function MoviesCard({ movie }) {
       <h2 className="movie__title">{movie.nameRU}</h2>
       <img
         className="movie__poster"
-        src={booksellers}
+        src={`https://api.nomoreparties.co${movie.image.url}`}
         alt={`Постер фильма '${movie.nameRU}'`}
       />
       {!isSavedMovies ? (

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-
 import "./MoviesCardList.css";
 
 export default function MoviesCardList({ movies }) {
@@ -22,7 +21,7 @@ export default function MoviesCardList({ movies }) {
       ) : (
         <ul className="cards__list">
           {movies.map((movie) => (
-            <MoviesCard key={movie.movieId} {...{ movie }} />
+            <MoviesCard key={movie.id} {...{ movie }} />
           ))}
         </ul>
       )}
