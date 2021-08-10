@@ -8,10 +8,8 @@ import "./Header.css";
 export default function Header({ isLoggedIn }) {
   const isMain = useRouteMatch({ path: "/", exact: true });
 
-
   const headerClassName = `header
   ${isMain && "header_type_main"}
-
   `;
 
   return (

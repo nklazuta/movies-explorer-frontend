@@ -10,7 +10,7 @@ export default function FilterCheckbox() {
 
   return (
     <div className="checkbox">
-      <label className="checkbox__label" for="checkbox">
+      <label className="checkbox__label" htmlFor="checkbox">
         <input
           className="checkbox__button_invisible"
           type="checkbox"
