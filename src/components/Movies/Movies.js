@@ -16,6 +16,7 @@ export default function Movies() {
       <main className="movies">
         <SearchForm />
         {isLoading ? <Preloader /> : <MoviesCardList {...{ movies }} />}
+        <button className="movies__more-button" type="button">Ещё</button>
       </main>
       <Footer />
     </>

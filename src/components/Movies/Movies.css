@@ -6,3 +6,24 @@
   display: flex;
   flex-direction: column;
 }
+
+.movies__more-button {
+  max-width: 320px;
+  width: calc(100% - 80px);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  background: none;
+  border: 1px solid #e8e8e8;
+  border-radius: 7px;
+  padding: 10px 0;
+  margin: 50px auto 80px;
+  cursor: pointer;
+  transition: opacity .5s ease;
+}
+
+.movies__more-button:hover {
+  opacity: 0.8;
+}
