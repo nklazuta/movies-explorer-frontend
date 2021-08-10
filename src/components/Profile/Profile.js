@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
+import { useFormWithValidation } from "../../hooks/useForm";
 import "./Profile.css";
 import { user } from "../../utils/test-data";
 
 export default function Profile() {
-  const [name, setName] = useState(user.name);
+  const { values, errors, isValid, handleChange } = useFormWithValidation();
+
   const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
   const [isEditContainerVisible, setEditContainerVisible] = useState(true);
 
+  const inputNameClassName = `profile__input profile__input_type_name ${
+    !isValid && "profile__input_type_error"
+  }`;
+
   const submitButtonClassName = `profile__submit ${
     !isSubmitButtonVisible && "profile__submit_type_invisible"
-  }`;
+  } ${!isValid && "form__submit_disabled"}`;
 
   const containerClassName = `profile__container ${
     !isEditContainerVisible && "profile__container_type_invisible"
   }`;
-
-  const handleNameChange = (evt) => {
-    setName(evt.target.value);
-  };
 
   const handleEditButton = () => {
     setSubmitButtonVisible(true);
@@ -41,18 +43,23 @@ export default function Profile() {
           <label className="profile__label">
             Имя
             {isSubmitButtonVisible ? (
-              <input
-                className="profile__input profile__input_type_name"
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Виталий"
-                minLength="2"
-                maxLength="30"
-                value={name}
-                onChange={handleNameChange}
-                required
-              />
+              <div className="profile__input-box">
+                <input
+                  className={inputNameClassName}
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Виталий"
+                  minLength="2"
+                  maxLength="30"
+                  value={values.name || ""}
+                  onChange={handleChange}
+                  required
+                />
+                <span className="profile__error" id="name-error">
+                  {errors.name || ""}
+                </span>
+              </div>
             ) : (
               <input className="profile__value" value={user.name} disabled />
             )}
@@ -65,6 +72,7 @@ export default function Profile() {
             className={submitButtonClassName}
             type="submit"
             onClick={handleSubmitButton}
+            disabled={!isValid}
           >
             Сохранить
           </button>

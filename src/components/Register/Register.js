@@ -1,24 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Form from "../Form/Form";
+import { useFormWithValidation } from "../../hooks/useForm";
 import "./Register.css";
 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleNameChange = (evt) => {
-    setName(evt.target.value);
-  };
-
-  const handleEmailChange = (evt) => {
-    setEmail(evt.target.value);
-  };
-
-  const handlePasswordChange = (evt) => {
-    setPassword(evt.target.value);
-  };
+  const { values, errors, isValid, handleChange } = useFormWithValidation();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -35,11 +22,14 @@ export default function Register() {
         redirectText="Уже зарегистрированы?"
         redirectLink="/signin"
         redirect="Войти"
+        isDisabled={!isValid}
       >
         <label className="form__label">
           Имя
           <input
-            className="form__input form__input_type_name"
+            className={`form__input form__input_type_name ${
+              !isValid && "form__input_type_error"
+            }`}
             id="name"
             name="name"
             type="text"
@@ -47,38 +37,51 @@ export default function Register() {
             autoComplete="name"
             minLength="2"
             maxLength="30"
-            value={name}
-            onChange={handleNameChange}
+            value={values.name || ""}
+            onChange={handleChange}
             required
           />
+          <span className="form__error" id="name-error">
+            {errors.name || ""}
+          </span>
         </label>
         <label className="form__label">
           E-mail
           <input
-            className="form__input form__input_type_email"
+            className={`form__input form__input_type_email ${
+              !isValid && "form__input_type_error"
+            }`}
             id="email"
             name="email"
             type="email"
             placeholder="pochta@yandex.ru"
             autoComplete="email"
-            value={email}
-            onChange={handleEmailChange}
+            value={values.email || ""}
+            onChange={handleChange}
             required
           />
+          <span className="form__error" id="email-error">
+            {errors.email || ""}
+          </span>
         </label>
         <label className="form__label">
           Пароль
           <input
-            className="form__input form__input_type_password"
+            className={`form__input form__input_type_password ${
+              !isValid && "form__input_type_error"
+            }`}
             id="password"
             name="password"
             type="password"
             placeholder="Пароль"
             autoComplete="password"
-            value={password}
-            onChange={handlePasswordChange}
+            value={values.password || ""}
+            onChange={handleChange}
             required
           />
+          <span className="form__error" id="password-error">
+            {errors.password || ""}
+          </span>
         </label>
       </Form>
     </section>

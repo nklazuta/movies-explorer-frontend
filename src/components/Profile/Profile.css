@@ -41,6 +41,11 @@
   margin: 0;
 }
 
+.profile__input-box {
+  display: flex;
+  flex-direction: column;
+}
+
 .profile__input {
   font-style: normal;
   font-weight: 500;
@@ -52,8 +57,26 @@
   border: none;
 }
 
+.profile__input_type_error {
+  color: #ff3055;
+}
+
 .profile__input:focus {
   outline: 1px solid #3456f3;
+}
+
+.profile__input_type_error:focus {
+  outline: 1px solid #ff3055;
+}
+
+.profile__error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 1.2;
+  color: #ff3055;
+  padding: 6px 0 0;
+  margin: 0;
 }
 
 .profile__value {
@@ -84,6 +107,11 @@
   margin: 379px 0 40px;
   cursor: pointer;
   transition: opacity .5s ease;
+}
+
+.profile__submit_disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .profile__submit:hover {
