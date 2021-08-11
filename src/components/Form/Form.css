@@ -1,0 +1,146 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.form__title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.21;
+  text-align: center;
+  padding: 50px 0 80px;
+  margin: 0;
+}
+
+.form__label {
+  display: flex;
+  flex-direction: column;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #a0a0a0;
+  padding: 0;
+  margin: 0 0 24px;
+
+}
+
+.form__input {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #000;
+  padding: 5px 0 10px;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e8e8e8;
+  outline: transparent;
+}
+
+.form__input_type_error {
+  color: #ff3055;
+}
+
+.form__input:focus {
+  border-bottom: 1px solid #3456f3;
+}
+
+.form__input_type_error:focus {
+  border-bottom: 1px solid #ff3055;
+}
+
+.form__error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #ff3055;
+  padding: 6px 0 0;
+  margin: 0;
+}
+
+.form__submit {
+  width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  color: #fff;
+  background: #3456f3;
+  border: none;
+  border-radius: 3px;
+  padding: 15px 0;
+  margin: 267px 0 14px;
+  cursor: pointer;
+  transition: opacity .5s ease;
+}
+
+.form__submit_type_register {
+  margin: 196px 0 14px;
+}
+
+.form__submit_disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.form__submit:hover {
+  opacity: 0.7;
+}
+
+.form__redirect {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  color: #a0a0a0;
+  border: none;
+  padding: 0 0 30px;
+  margin: 0;
+}
+
+.form__redirect-button {
+  color: #3456f3;
+  text-decoration: none;
+  padding: 0 7px;
+  border: none;
+  cursor: pointer;
+  transition: opacity .5s ease;
+}
+
+.form__redirect-button:hover {
+  opacity: 0.7;
+}
+
+.form__redirect-button:focus {
+  outline: 1px solid #3456f3;
+}
+
+@media screen and (min-width: 560px) {
+  .form__title {
+    text-align: left;
+    padding: 40px 0;
+  }
+
+  .form__submit {
+    font-size: 14px;
+    line-height: 1.21;
+    padding: 14px 0;
+    margin: 197px 0 16px;
+  }
+
+  .form__submit_type_register {
+    margin: 128px 0 16px;
+  }
+
+  .form__redirect {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}
