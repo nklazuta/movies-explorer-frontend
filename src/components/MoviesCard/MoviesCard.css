@@ -1,10 +1,12 @@
 .movie {
   min-width: 300px;
+  max-width: 400px;
   width: 100%;
   background: #fdfdfd;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
   display: grid;
+  margin: 0 auto;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-template-areas:
@@ -24,6 +26,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.movie__trailer {
+  text-decoration: none;
 }
 
 .movie__poster {

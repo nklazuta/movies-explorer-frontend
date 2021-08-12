@@ -7,5 +7,5 @@ export const getMovies = () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(),
-  }).then((res) => parseResponse(res));
+  }).then((res) => parseResponse(res))
 };

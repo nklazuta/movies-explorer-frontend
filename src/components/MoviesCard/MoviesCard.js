@@ -14,14 +14,31 @@ export default function MoviesCard({ movie }) {
     setIsLiked(!isLiked);
   };
 
+  const duratioinInHours = (duration) => {
+    if (duration <= 60) {
+      return `${duration}м`;
+    } else {
+      const hours = Math.floor(duration / 60);
+      const minutes = Math.floor(duration % 60);
+      return `${hours}ч ${minutes}м`;
+    }
+  };
+
   return (
     <li className="movie">
       <h2 className="movie__title">{movie.nameRU}</h2>
-      <img
-        className="movie__poster"
-        src={`https://api.nomoreparties.co${movie.image.url}`}
-        alt={`Постер фильма '${movie.nameRU}'`}
-      />
+      <a
+        className="movie__trailer"
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="movie__poster"
+          src={`https://api.nomoreparties.co${movie.image.url}`}
+          alt={`Постер фильма '${movie.nameRU}'`}
+        />
+      </a>
       {!isSavedMovies ? (
         <button
           className={cardSaveButtonClassName}
@@ -36,7 +53,7 @@ export default function MoviesCard({ movie }) {
           aria-label="Удалить из любимых фильмов"
         />
       )}
-      <p className="movie__duration">{movie.duration}</p>
+      <p className="movie__duration">{duratioinInHours(movie.duration)}</p>
     </li>
   );
 }

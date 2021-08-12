@@ -1,27 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+// import { useSearchWithValidation } from "../../hooks/useForm";
 import "./SearchForm.css";
 
-export default function SearchForm() {
-  const [search, setSearch] = useState("");
-
-  const handlSearchChange = (evt) => {
-    setSearch(evt.target.value);
-  };
+export default function SearchForm({
+  onSubmit,
+  onSearchChange,
+  onCheckBoxClick,
+  searchKey,
+  isChecked,
+}) {
+  // const { values, errors, isValid, handleChange } =
+  //   useSearchWithValidation();
 
   return (
     <section className="search">
-      <form className="search__form">
+      <form className="search__form" onSubmit={onSubmit}>
         <div className="search__box">
           <div className="search__logo" />
           <input
             className="search__input"
-            id="movie"
+            id="search"
             type="search"
-            name="movie"
+            name="search"
             placeholder="Фильм"
-            value={search}
-            onChange={handlSearchChange}
+            value={searchKey || ""}
+            onChange={onSearchChange}
             required
           />
           <button
@@ -30,7 +34,7 @@ export default function SearchForm() {
             aria-label="Искать"
           />
         </div>
-        <FilterCheckbox />
+        <FilterCheckbox {...{ onCheckBoxClick, isChecked }} />
       </form>
     </section>
   );

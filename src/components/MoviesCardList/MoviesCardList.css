@@ -5,6 +5,7 @@
 }
 
 .cards__not-found {
+  max-width: 500px;
   color: #a0a0a0;
   font-style: normal;
   font-weight: 400;
