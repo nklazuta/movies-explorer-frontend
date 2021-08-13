@@ -14,11 +14,16 @@ export function useFormWithValidation() {
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: input.validationMessage });
     setIsFormValid(input.closest("form").checkValidity());
-    setIsInputValid(input.checkValidity())
+    setIsInputValid(input.checkValidity());
   };
 
   const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsFormValid = false, newIsInputValid = false) => {
+    (
+      newValues = {},
+      newErrors = {},
+      newIsFormValid = false,
+      newIsInputValid = false
+    ) => {
       setValues(newValues);
       setErrors(newErrors);
       setIsFormValid(newIsFormValid);
@@ -41,9 +46,11 @@ export function useSearchWithValidation() {
     const name = input.name;
 
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: input.setCustomValidity("Нужно ввести ключевое слово") });
-    setIsValid(input.checkValidity());
-    console.log(input.checkValidity())
+    setErrors({
+      ...errors,
+      [name]: input.setCustomValidity("Нужно ввести ключевое слово"),
+    });
+    setIsValid(input.closest("form").checkValidity());
   };
 
   const resetForm = useCallback(

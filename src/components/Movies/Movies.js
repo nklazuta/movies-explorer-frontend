@@ -16,6 +16,7 @@ import {
 import "./Movies.css";
 
 export default function Movies() {
+
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
