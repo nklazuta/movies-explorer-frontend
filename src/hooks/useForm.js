@@ -3,28 +3,31 @@ import { useState, useCallback } from "react";
 export function useFormWithValidation() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isInputValid, setIsInputValid] = useState(false);
 
   const handleChange = (evt) => {
     const input = evt.target;
     const value = input.value;
     const name = input.name;
 
-    setValues({ ...{ values }, [name]: value });
-    setErrors({ ...{ errors }, [name]: input.validationMessage });
-    setIsValid(input.checkValidity());
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: input.validationMessage });
+    setIsFormValid(input.closest("form").checkValidity());
+    setIsInputValid(input.checkValidity())
   };
 
   const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
+    (newValues = {}, newErrors = {}, newIsFormValid = false, newIsInputValid = false) => {
       setValues(newValues);
       setErrors(newErrors);
-      setIsValid(newIsValid);
+      setIsFormValid(newIsFormValid);
+      setIsInputValid(newIsInputValid);
     },
-    [setValues, setErrors, setIsValid]
+    [setValues, setErrors, setIsFormValid]
   );
 
-  return { values, errors, isValid, handleChange, resetForm };
+  return { values, errors, isFormValid, isInputValid, handleChange, resetForm };
 }
 
 export function useSearchWithValidation() {
@@ -37,8 +40,8 @@ export function useSearchWithValidation() {
     const value = input.value;
     const name = input.name;
 
-    setValues({ ...{ values }, [name]: value });
-    setErrors({ ...{ errors }, [name]: input.setCustomValidity("Нужно ввести ключевое слово") });
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: input.setCustomValidity("Нужно ввести ключевое слово") });
     setIsValid(input.checkValidity());
     console.log(input.checkValidity())
   };

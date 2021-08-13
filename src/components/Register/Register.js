@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Register.css";
 
-export default function Register() {
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+export default function Register({ isSending }) {
+  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } = useFormWithValidation();
+
+  useEffect(() => {
+    resetForm({});
+  }, [resetForm]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -17,18 +21,18 @@ export default function Register() {
       <Form
         title="Добро пожаловать!"
         type="register"
-        buttonText="Зарегистрироваться"
+        buttonText={isSending ? "Сохранение..." : "Зарегистрироваться"}
         onSubmit={handleSubmit}
         redirectText="Уже зарегистрированы?"
         redirectLink="/signin"
         redirect="Войти"
-        isDisabled={!isValid}
+        isDisabled={!isFormValid || isSending}
       >
-        <label className="form__label">
+        <label className="form__label" htmlFor="name">
           Имя
           <input
             className={`form__input form__input_type_name ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="name"
             name="name"
@@ -45,11 +49,11 @@ export default function Register() {
             {errors.name || ""}
           </span>
         </label>
-        <label className="form__label">
+        <label className="form__label" htmlFor="email">
           E-mail
           <input
             className={`form__input form__input_type_email ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="email"
             name="email"
@@ -64,11 +68,11 @@ export default function Register() {
             {errors.email || ""}
           </span>
         </label>
-        <label className="form__label">
+        <label className="form__label" htmlFor="password">
           Пароль
           <input
             className={`form__input form__input_type_password ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="password"
             name="password"

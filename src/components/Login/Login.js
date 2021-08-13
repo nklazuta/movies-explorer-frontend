@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Login.css";
 
-export default function Login() {
-  const { values, errors, isValid, handleChange } =
+export default function Login({ isSending }) {
+  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
+
+    useEffect(() => {
+      resetForm({});
+    }, [resetForm]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -18,18 +22,18 @@ export default function Login() {
       <Form
         title="Рады видеть!"
         type="login"
-        buttonText="Войти"
+        buttonText={isSending ? "Сохранение..." : "Войти"}
         onSubmit={handleSubmit}
         redirectText="Ещё не зарегистрированы?"
         redirectLink="/signup"
         redirect="Регистрация"
-        isDisabled={!isValid}
+        isDisabled={!isFormValid || isSending}
       >
-        <label className="form__label">
+        <label className="form__label" htmlFor="email">
           E-mail
           <input
             className={`form__input form__input_type_email ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="email"
             name="email"
@@ -44,11 +48,11 @@ export default function Login() {
             {errors.email || ""}
           </span>
         </label>
-        <label className="form__label">
+        <label className="form__label" htmlFor="password">
           Пароль
           <input
             className={`form__input form__input_type_password ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="password"
             name="password"
