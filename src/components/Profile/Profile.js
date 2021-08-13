@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Profile.css";
 import { user } from "../../utils/test-data";
 
-export default function Profile() {
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+export default function Profile({ isSending }) {
+  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } = useFormWithValidation();
+
+  useEffect(() => {
+    resetForm({});
+  }, [resetForm]);
 
   const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
   const [isEditContainerVisible, setEditContainerVisible] = useState(true);
 
   const inputNameClassName = `profile__input profile__input_type_name ${
-    !isValid && "profile__input_type_error"
+    !isInputValid && "profile__input_type_error"
   }`;
 
   const submitButtonClassName = `profile__submit ${
     !isSubmitButtonVisible && "profile__submit_type_invisible"
-  } ${!isValid && "form__submit_disabled"}`;
+  } ${!isFormValid || isSending ? "form__submit_disabled" : ""}`;
 
   const containerClassName = `profile__container ${
     !isEditContainerVisible && "profile__container_type_invisible"
@@ -49,7 +53,7 @@ export default function Profile() {
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="Виталий"
+                  placeholder="Имя"
                   minLength="2"
                   maxLength="30"
                   value={values.name || ""}
@@ -72,9 +76,9 @@ export default function Profile() {
             className={submitButtonClassName}
             type="submit"
             onClick={handleSubmitButton}
-            disabled={!isValid}
+            disabled={!isFormValid || isSending}
           >
-            Сохранить
+            {isSending ? "Сохранение..." : "Сохранить"}
           </button>
           <div className={containerClassName}>
             <button
