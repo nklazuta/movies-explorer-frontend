@@ -29,11 +29,12 @@
 }
 
 .movie__trailer {
-  text-decoration: none;
+  grid-area: poster;
+  width: 100%;
+  cursor: pointer;
 }
 
 .movie__poster {
-  grid-area: poster;
   width: 100%;
   height: 168px;
   object-fit: cover;

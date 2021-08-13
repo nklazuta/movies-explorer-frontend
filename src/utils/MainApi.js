@@ -1,7 +1,7 @@
-import { BASE_URL, parseResponse } from "./utils";
+import { MAIN_URL, parseResponse } from "./utils";
 
 export const getMovies = () => {
-  return fetch(`${BASE_URL}/movies`, {
+  return fetch(`${MAIN_URL}/movies`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -10,19 +10,19 @@ export const getMovies = () => {
   }).then((res) => parseResponse(res));
 };
 
-export const createMovie = ({ ...rest }) => {
-  return fetch(`${BASE_URL}/movies`, {
+export const saveMovie = (data) => {
+  return fetch(`${MAIN_URL}/movies`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ...rest }),
+    body: JSON.stringify(data),
   }).then((res) => parseResponse(res));
 };
 
 export const deleteMovie = (movieId) => {
-  return fetch(`${BASE_URL}/movies/${movieId}`, {
+  return fetch(`${MAIN_URL}/movies/${movieId}`, {
     method: "DELETE",
     credentials: "include",
     headers: {

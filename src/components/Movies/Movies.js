@@ -5,14 +5,12 @@ import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import * as MoviesApi from "../../utils/MoviesApi";
+import * as MainApi from "../../utils/MainApi";
 import {
   NOT_FOUND_ERR,
   FAILED_TO_FETCH_ERR,
-  MOBILE,
   INITIAL_MOBILE_NUMBER_OF_CARDS,
-  TABLET,
   INITIAL_TABLET_NUMBER_OF_CARDS,
-  COMPUTER,
   INITIAL_COMPUTER_NUMBER_OF_CARDS,
 } from "../../utils/utils";
 import "./Movies.css";
@@ -27,10 +25,11 @@ export default function Movies() {
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
   const [windowWidth, setWindowWidth] = useState(document.body.clientWidth);
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
 
-  const checkWindowWidth = () => {
-    setWindowWidth(document.body.clientWidth);
-  };
+  const MOBILE = windowWidth >= 320 && windowWidth <= 689;
+  const TABLET = windowWidth > 689 && windowWidth < 1088;
+  const COMPUTER = windowWidth >= 1088;
 
   useEffect(() => {
     setSearchKey(localStorage.getItem("searchKey"));
@@ -44,21 +43,8 @@ export default function Movies() {
     hideMoreButton();
   }, [currentShownCardsNumber, filteredMovies]);
 
-  useEffect(() => {
-    console.log(windowWidth);
-  });
-
-  const handleSearchChange = (evt) => {
-    setSearchKey(evt.target.value);
-  };
-
-  const handleFilterCheckboxClick = () => {
-    setIsCheckedCheckbox(!isCheckedCheckbox);
-  };
-
-  const moviesNotFound = (movies) => {
-    const empty = movies.length < 1;
-    return empty ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
+  const checkWindowWidth = () => {
+    setWindowWidth(document.body.clientWidth);
   };
 
   const loadMovieCards = () => {
@@ -103,10 +89,9 @@ export default function Movies() {
     }
   };
 
-  const handleSubmitSearch = (evt) => {
-    evt.preventDefault();
-    loadMovieCards();
-    initialNumberOfCards();
+  const moviesNotFound = (movies) => {
+    const empty = movies.length < 1;
+    return empty ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
   };
 
   const showCards = (filteredMovies) => {
@@ -141,6 +126,11 @@ export default function Movies() {
     }
   };
 
+  const hideMoreButton = () => {
+    const tooLongArray = currentShownCardsNumber >= filteredMovies.length;
+    setIsButtonHidden(tooLongArray);
+  };
+
   const handleMoreButtonClick = () => {
     if (MOBILE) {
       setCurrentShownCardsNumber(currentShownCardsNumber + 2);
@@ -151,9 +141,66 @@ export default function Movies() {
     }
   };
 
-  const hideMoreButton = () => {
-    const tooLongArray = currentShownCardsNumber >= filteredMovies.length;
-    setIsButtonHidden(tooLongArray);
+  const handleSearchChange = (evt) => {
+    setSearchKey(evt.target.value);
+  };
+
+  const handleFilterCheckboxClick = () => {
+    setIsCheckedCheckbox(!isCheckedCheckbox);
+  };
+
+  const handleSaveButtonClick = (movie) => {
+    const isSaved = savedMoviesList.some((i) => i.movieId === movie.movieId);
+    console.log(savedMoviesList);
+
+    if (!isSaved) {
+      saveMovie({
+        country: movie.country ? movie.country : "Страна не указана",
+        director: movie.director ? movie.director : "Режиссёр не указан",
+        duration: movie.duration,
+        year: movie.year ? movie.year : "Год не указан",
+        description: movie.description
+          ? movie.description
+          : "Описание не указано",
+        image: `https://api.nomoreparties.co${movie.image.url}`,
+        trailer: movie.trailerLink ? movie.trailerLink : "https://youtube.ru",
+        thumbnail: movie.image.formats.thumbnail.url
+          ? `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`
+          : "Параметр не указан",
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN
+          ? movie.nameEN
+          : "Название на английском не указано",
+      });
+    } else {
+      deleteMovie(movie);
+    }
+  };
+
+  const saveMovie = (data) => {
+    MainApi.saveMovie(data)
+      .then((newMovie) => {
+        setSavedMoviesList([newMovie, ...{ savedMoviesList }]);
+        console.log(newMovie);
+      })
+      .catch((err) => console.log("Ошибка: ", err));
+  };
+
+  const deleteMovie = (movie) => {
+    MainApi.deleteMovie(movie.movieId)
+      .then(() => {
+        setSavedMoviesList((movies) =>
+          movies.filter((m) => m.movieId !== movie.movieId && m)
+        );
+      })
+      .catch((err) => console.log("Ошибка: ", err));
+  };
+
+  const handleSubmitSearch = (evt) => {
+    evt.preventDefault();
+    loadMovieCards();
+    initialNumberOfCards();
   };
 
   window.addEventListener("resize", () => {
@@ -176,7 +223,12 @@ export default function Movies() {
         {isLoading ? (
           <Preloader />
         ) : (
-          <MoviesCardList movies={shownMovies} {...{ moviesError }} />
+          <MoviesCardList
+            movies={shownMovies}
+            onSaveClick={handleSaveButtonClick}
+            onDeleteClick={handleSaveButtonClick}
+            {...{ moviesError, savedMoviesList }}
+          />
         )}
         <button
           className={`movies__more-button ${

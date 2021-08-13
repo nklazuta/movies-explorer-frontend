@@ -1,18 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import "./MoviesCard.css";
 
-export default function MoviesCard({ movie }) {
+export default function MoviesCard({
+  movie,
+  onSaveClick,
+  onDeleteClick,
+  savedMoviesList,
+}) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
-  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const cardSaveButtonClassName = `movie__save-button ${
-    isLiked && "movie__save-button_active"
+    isSaved && "movie__save-button_active"
   }`;
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-  };
 
   const duratioinInHours = (duration) => {
     if (duration <= 60) {
@@ -23,6 +24,16 @@ export default function MoviesCard({ movie }) {
       return `${hours}ч ${minutes}м`;
     }
   };
+
+  function handleSaveClick(movie) {
+    onSaveClick(movie);
+    setIsSaved(true);
+  }
+
+  function handleDeleteClick(movie) {
+    onDeleteClick(movie);
+    setIsSaved(false);
+  }
 
   return (
     <li className="movie">
@@ -44,13 +55,14 @@ export default function MoviesCard({ movie }) {
           className={cardSaveButtonClassName}
           type="button"
           aria-label="Добавить в любимые фильмы"
-          onClick={handleLikeClick}
+          onClick={() => handleSaveClick(movie)}
         />
       ) : (
         <button
           className="movie__delete-button"
           type="button"
           aria-label="Удалить из любимых фильмов"
+          onClick={() => handleDeleteClick(movie)}
         />
       )}
       <p className="movie__duration">{duratioinInHours(movie.duration)}</p>
