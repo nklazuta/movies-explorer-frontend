@@ -5,7 +5,8 @@ import { useFormWithValidation } from "../../hooks/useForm";
 import "./Register.css";
 
 export default function Register({ isSending }) {
-  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } = useFormWithValidation();
+  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
+    useFormWithValidation();
 
   useEffect(() => {
     resetForm({});

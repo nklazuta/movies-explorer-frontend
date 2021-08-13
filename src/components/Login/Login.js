@@ -8,9 +8,9 @@ export default function Login({ isSending }) {
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
 
-    useEffect(() => {
-      resetForm({});
-    }, [resetForm]);
+  useEffect(() => {
+    resetForm({});
+  }, [resetForm]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
