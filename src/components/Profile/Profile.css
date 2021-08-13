@@ -110,7 +110,8 @@
 }
 
 .profile__submit_disabled {
-  opacity: 0.4;
+  color: #c2c2c2;
+  background: #f8f8f8;
   pointer-events: none;
 }
 
@@ -183,8 +184,8 @@
   }
 
   .profile__submit {
-    font-size: 13px;
-    line-height: 1.23;
+    font-size: 14px;
+    line-height: 1.21;
     margin: 210px 0 40px;
   }
 

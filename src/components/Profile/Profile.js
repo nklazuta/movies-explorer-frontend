@@ -21,7 +21,7 @@ export default function Profile({ isSending }) {
 
   const submitButtonClassName = `profile__submit ${
     !isSubmitButtonVisible && "profile__submit_type_invisible"
-  } ${!isFormValid || isSending ? "form__submit_disabled" : ""}`;
+  } ${!isFormValid || isSending ? "profile__submit_disabled" : ""}`;
 
   const containerClassName = `profile__container ${
     !isEditContainerVisible && "profile__container_type_invisible"
