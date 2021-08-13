@@ -5,8 +5,9 @@ import { useFormWithValidation } from "../../hooks/useForm";
 import "./Profile.css";
 import { user } from "../../utils/test-data";
 
-export default function Profile({ isSending }) {
-  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } = useFormWithValidation();
+export default function Profile({ isSending, onLogout, onUpdateUser }) {
+  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
+    useFormWithValidation();
 
   useEffect(() => {
     resetForm({});
@@ -27,16 +28,20 @@ export default function Profile({ isSending }) {
     !isEditContainerVisible && "profile__container_type_invisible"
   }`;
 
-  const handleEditButton = () => {
+  function handleEditButton() {
     setSubmitButtonVisible(true);
     setEditContainerVisible(false);
-  };
+  }
 
-  const handleSubmitButton = (evt) => {
+  function handleSubmitButton(evt) {
     evt.preventDefault();
+    onUpdateUser({
+      name: values.name,
+      email: user.mail,
+    });
     setSubmitButtonVisible(false);
     setEditContainerVisible(true);
-  };
+  }
 
   return (
     <>
@@ -88,7 +93,11 @@ export default function Profile({ isSending }) {
             >
               Редактировать
             </button>
-            <Link to="/signin" className="profile__redirect-button">
+            <Link
+              to="/signin"
+              className="profile__redirect-button"
+              onClick={onLogout}
+            >
               Выйти из аккаунта
             </Link>
           </div>

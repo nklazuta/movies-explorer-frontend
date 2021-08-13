@@ -10,7 +10,9 @@ export default function Navigation({ isMain }) {
   };
 
   return (
-    <nav className={`navigation ${isMenuOpen && "navigation_menu-open"}`}>
+    <nav
+      className={`navigation ${isMenuOpen && "navigation_menu-open"}`}
+    >
       <button
         className={`navigation__burger ${
           isMain && "navigation__burger_type_main"
@@ -19,7 +21,7 @@ export default function Navigation({ isMain }) {
         aria-label="Меню"
         onClick={toggleMenu}
       />
-      <div className="navigation__wrapper">
+      <div className={`navigation__wrapper ${isMain && "navigation__wrapper_type_main"}`}>
         <button
           className="navigation__close-button"
           type="button"

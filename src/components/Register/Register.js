@@ -4,7 +4,7 @@ import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Register.css";
 
-export default function Register({ isSending }) {
+export default function Register({ onRegister, isSending }) {
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
 
@@ -14,6 +14,11 @@ export default function Register({ isSending }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    onRegister({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    });
   };
 
   return (

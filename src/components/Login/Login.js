@@ -4,7 +4,7 @@ import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Login.css";
 
-export default function Login({ isSending }) {
+export default function Login({ onLogin, isSending }) {
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
 
@@ -14,6 +14,10 @@ export default function Login({ isSending }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    onLogin({
+      email: values.email,
+      password: values.password,
+    });
   };
 
   return (
