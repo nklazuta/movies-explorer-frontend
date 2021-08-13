@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import { useFormWithValidation } from "../../hooks/useForm";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
-import { user } from "../../utils/test-data";
 
 export default function Profile({ isSending, onLogout, onUpdateUser }) {
+  const currentUser = useContext(CurrentUserContext);
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
 
@@ -37,7 +38,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser }) {
     evt.preventDefault();
     onUpdateUser({
       name: values.name,
-      email: user.mail,
+      email: currentUser.mail,
     });
     setSubmitButtonVisible(false);
     setEditContainerVisible(true);
@@ -48,7 +49,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser }) {
       <Header />
       <section className="profile">
         <form className="profile__form">
-          <h2 className="profile__title">{`Привет, ${user.name}!`}</h2>
+          <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
           <label className="profile__label">
             Имя
             {isSubmitButtonVisible ? (
@@ -70,12 +71,20 @@ export default function Profile({ isSending, onLogout, onUpdateUser }) {
                 </span>
               </div>
             ) : (
-              <input className="profile__value" value={user.name} disabled />
+              <input
+                className="profile__value"
+                value={currentUser.name}
+                disabled
+              />
             )}
           </label>
           <label className="profile__label">
             E-mail
-            <input className="profile__value" value={user.mail} disabled />
+            <input
+              className="profile__value"
+              value={currentUser.mail}
+              disabled
+            />
           </label>
           <button
             className={submitButtonClassName}
