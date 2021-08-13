@@ -6,13 +6,15 @@ export default function MoviesCard({
   movie,
   onSaveClick,
   onDeleteClick,
-  savedMoviesList,
+  isSaved,
 }) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
-  const [isSaved, setIsSaved] = useState(false);
+
+
+
 
   const cardSaveButtonClassName = `movie__save-button ${
-    isSaved && "movie__save-button_active"
+    movie.isSaved && "movie__save-button_active"
   }`;
 
   const duratioinInHours = (duration) => {
@@ -27,12 +29,12 @@ export default function MoviesCard({
 
   function handleSaveClick(movie) {
     onSaveClick(movie);
-    setIsSaved(true);
+
   }
 
   function handleDeleteClick(movie) {
     onDeleteClick(movie);
-    setIsSaved(false);
+
   }
 
   return (

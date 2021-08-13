@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import * as MoviesApi from "../../utils/MoviesApi";
 import * as MainApi from "../../utils/MainApi";
 import {
@@ -16,7 +17,6 @@ import {
 import "./Movies.css";
 
 export default function Movies() {
-
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
@@ -27,6 +27,7 @@ export default function Movies() {
   const [isButtonHidden, setIsButtonHidden] = useState(false);
   const [windowWidth, setWindowWidth] = useState(document.body.clientWidth);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
 
   const MOBILE = windowWidth >= 320 && windowWidth <= 689;
   const TABLET = windowWidth > 689 && windowWidth < 1088;
@@ -37,6 +38,7 @@ export default function Movies() {
     setIsCheckedCheckbox(JSON.parse(localStorage.getItem("isChecked")));
     setFilteredMovies(JSON.parse(localStorage.getItem("filteredMovies")));
     checkWindowWidth();
+    loadSavedMovies();
   }, []);
 
   useEffect(() => {
@@ -59,6 +61,17 @@ export default function Movies() {
       .finally(() => setIsLoading(false));
   };
 
+  const loadSavedMovies = () => {
+    MainApi.getMovies()
+    .then((res) => {
+      setSavedMoviesList(res);
+      localStorage.setItem("savedMovies", JSON.stringify(res));
+    })
+    .catch((err) => {
+      console.log("Ошибка: ", err);
+    })
+  }
+
   const filterMoviesHandle = (movies, key, isChecked) => {
     localStorage.setItem("searchKey", key);
     localStorage.setItem("isChecked", isChecked);
@@ -75,6 +88,7 @@ export default function Movies() {
         (movie) => movie.duration > 40
       );
       moviesNotFound(filteredMoviesByCheckbox);
+      findSavedMovies(filteredMoviesByCheckbox);
       localStorage.setItem(
         "filteredMovies",
         JSON.stringify(filteredMoviesByCheckbox)
@@ -82,6 +96,7 @@ export default function Movies() {
       return setFilteredMovies(filteredMoviesByCheckbox);
     } else {
       moviesNotFound(filteredMoviesByKey);
+      findSavedMovies(filteredMoviesByKey);
       localStorage.setItem(
         "filteredMovies",
         JSON.stringify(filteredMoviesByKey)
@@ -150,11 +165,16 @@ export default function Movies() {
     setIsCheckedCheckbox(!isCheckedCheckbox);
   };
 
-  const handleSaveButtonClick = (movie) => {
-    const isSaved = savedMoviesList.some((i) => i.movieId === movie.movieId);
-    console.log(savedMoviesList);
+  const findSavedMovies = (movies) => {
+    movies.map((movie) => {
+      console.log(movie.owner === currentUser.id)
+      return movie.owner === currentUser.id ? movie.isSaved = true : movie.isSaved = false;
+    })
+  }
 
-    if (!isSaved) {
+  const handleSaveButtonClick = (movie) => {
+    console.log(movie.isSaved)
+    if (!movie.isSaved) {
       saveMovie({
         country: movie.country ? movie.country : "Страна не указана",
         director: movie.director ? movie.director : "Режиссёр не указан",
@@ -182,8 +202,8 @@ export default function Movies() {
   const saveMovie = (data) => {
     MainApi.saveMovie(data)
       .then((newMovie) => {
-        setSavedMoviesList([newMovie, ...{ savedMoviesList }]);
-        console.log(newMovie);
+        setSavedMoviesList(savedMoviesList.data.push(newMovie));
+        localStorage.setItem("savedMovies", JSON.stringify(savedMoviesList));
       })
       .catch((err) => console.log("Ошибка: ", err));
   };

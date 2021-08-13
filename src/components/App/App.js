@@ -21,14 +21,24 @@ export default function App() {
     tokenCheck();
   }, []);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      getContent();
+    }
+  }, [isLoggedIn]);
+
   const tokenCheck = () => {
-    MainApi.getUser()
-      .then((res) => {
-        setCurrentUser(res);
-        setIsLoggedIn(true);
-      })
-      .catch((err) => console.log("Ошибка: ", err));
+    getContent();
   };
+
+  const getContent = () => {
+    MainApi.getUser()
+    .then((res) => {
+      setCurrentUser(res);
+      setIsLoggedIn(true);
+    })
+    .catch((err) => console.log("Ошибка: ", err));
+  }
 
   const onRegister = (data) => {
     setIsSending(true);

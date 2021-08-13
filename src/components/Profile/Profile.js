@@ -50,7 +50,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser }) {
       <section className="profile">
         <form className="profile__form">
           <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
-          <label className="profile__label">
+          <label className="profile__label" htmlFor="name">
             Имя
             {isSubmitButtonVisible ? (
               <div className="profile__input-box">
@@ -82,7 +82,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser }) {
             E-mail
             <input
               className="profile__value"
-              value={currentUser.mail}
+              value={currentUser.email}
               disabled
             />
           </label>
