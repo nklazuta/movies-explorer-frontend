@@ -10,7 +10,7 @@ import { NOT_FOUND_ERR, FAILED_TO_FETCH_ERR } from "../../utils/utils";
 import "./SavedMovies.css";
 
 export default function SavedMovies() {
-  const [savedMovies, setSavedMoviesList] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
@@ -20,6 +20,12 @@ export default function SavedMovies() {
 
   //эффекты при загрузке страницы
   useEffect(() => {
+    if (localStorage.getItem("savedMovies") !== null) {
+      setSavedMovies(
+        JSON.parse(localStorage.getItem("savedMovies"))
+      );
+    }
+
     loadSavedMovies();
     console.log(savedMovies);
   }, []);
@@ -28,14 +34,14 @@ export default function SavedMovies() {
   useEffect(() => {
     filteredMovies.length !== 0
       ? showCards(filteredMovies)
-      : showCards(savedMovies);
+      : showCards(savedMovies.data);
   }, [filteredMovies, savedMovies]);
 
   //загрузить сохраненные пользователем фильмы
   const loadSavedMovies = () => {
     MainApi.getMovies()
       .then((res) => {
-        setSavedMoviesList(res);
+        setSavedMovies(res);
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -47,7 +53,7 @@ export default function SavedMovies() {
   const deleteMovie = (movie) => {
     MainApi.deleteMovie(movie.movieId)
       .then(() => {
-        setSavedMoviesList((state) =>
+        setSavedMovies((state) =>
         state.filter((m) => m.movieId !== movie.movieId)
         );
       })
@@ -62,7 +68,7 @@ export default function SavedMovies() {
 
   //создать массив карточек для отрисовки
   const showCards = (movies) => {
-    checkArrayLength(filteredMovies);
+    checkArrayLength(movies);
     setShownMovies(movies);
   };
 

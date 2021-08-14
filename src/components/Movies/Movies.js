@@ -23,7 +23,7 @@ export default function Movies() {
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
-  const [savedMovies, setSavedMoviesList] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const currentUser = useContext(CurrentUserContext);
   const { filteredMovies, filterMoviesHandle } = useFilter();
   const {
@@ -44,10 +44,16 @@ export default function Movies() {
       );
     }
 
+    if (localStorage.getItem("savedMovies") !== null) {
+      setSavedMovies(
+        JSON.parse(localStorage.getItem("savedMovies"))
+      );
+    }
+
     checkWindowWidth();
     loadSavedMovies();
     loadAllMovieCards();
-    console.log(savedMovies);
+
   }, []);
 
   //эффекты при изменении количества показываемых карточек или массива карточек
@@ -72,7 +78,11 @@ export default function Movies() {
   const loadSavedMovies = () => {
     MainApi.getMovies()
       .then((res) => {
-        setSavedMoviesList(res);
+        setSavedMovies(res);
+        localStorage.setItem(
+          "savedMovies",
+          JSON.stringify(res)
+        );
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -83,7 +93,7 @@ export default function Movies() {
   const saveMovie = (data) => {
     MainApi.saveMovie(data)
       .then((newMovie) => {
-        setSavedMoviesList((state) => [newMovie, ...state]);
+        setSavedMovies((state) => [newMovie, ...state]);
         newMovie.isSaved = true;
       })
       .catch((err) => console.log("Ошибка: ", err));
@@ -93,7 +103,7 @@ export default function Movies() {
   const deleteMovie = (movie) => {
     MainApi.deleteMovie(movie.movieId)
       .then((newMovie) => {
-        setSavedMoviesList((state) =>
+        setSavedMovies((state) =>
         state.map((m) => m.id === movie.id ? newMovie : m)
         );
         newMovie.isSaved = false;
@@ -101,7 +111,7 @@ export default function Movies() {
       .catch((err) => console.log("Ошибка: ", err));
   };
 
-  //проверить длину массива с фильмами, чтобы отобразить блок "ничего не найдено"
+  //проверить, что массив с фильмами не пустой
   const checkArrayLength = (movies) => {
     const empty = movies.length === 0;
     return empty ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
@@ -109,8 +119,10 @@ export default function Movies() {
 
   //найти уже сохраненные фильмы в массиве отфильтрованных фильмов
   const findSavedMovies = (movies) => {
+    console.log(movies)
+    console.log(savedMovies)
     movies.map((movie) => {
-      const alreadySavedMovie = savedMovies.some((m) => m.movieId === movie.id);
+      const alreadySavedMovie = savedMovies.data.some((m) => m.movieId === movie.id);
       console.log(alreadySavedMovie);
       return alreadySavedMovie ? movie.isSaved = true : movie.isSaved = false;
     });
@@ -120,6 +132,7 @@ export default function Movies() {
   const showCards = (filteredMovies) => {
     setNumberOfShownCards();
     checkArrayLength(filteredMovies);
+    findSavedMovies(filteredMovies);
     let movies = filteredMovies.slice(0, currentShownCardsNumber);
     return setShownMovies(movies);
   };
@@ -129,7 +142,6 @@ export default function Movies() {
     const movies = filteredMovies.length !== 0
       ? filteredMovies
       : filteredMoviesFromStorage;
-    console.log(filteredMovies)
     const isShownArrayLonger = currentShownCardsNumber >= movies.length;
     setIsButtonHidden(isShownArrayLonger);
   };
@@ -181,7 +193,6 @@ export default function Movies() {
     }, 250);
     filterMoviesHandle(allMovies, searchKey, isCheckedCheckbox);
     setInitialNumberOfCards();
-    findSavedMovies(allMovies);
   }
 
   //отслеживать изменение ширины экрана
