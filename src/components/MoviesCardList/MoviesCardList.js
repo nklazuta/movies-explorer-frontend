@@ -17,7 +17,7 @@ export default function MoviesCardList({
         <ul className="cards__list">
           {movies.map((movie) => (
             <MoviesCard
-              key={movie.id}
+            key={movie.id ? movie.id : movie.movieId}
               {...{ movie, onSaveClick, onDeleteClick, savedMoviesList }}
             />
           ))}

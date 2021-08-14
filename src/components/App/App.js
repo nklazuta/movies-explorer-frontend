@@ -15,6 +15,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isSending, setIsSending] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isError, setIsError] = useState();
   const history = useHistory();
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function App() {
     return MainApi.logout()
       .then(() => {
         setIsLoggedIn(false);
-        history.push("/signin");
+        history.push("/");
       })
       .catch((err) => console.log("Ошибка: ", err));
   };

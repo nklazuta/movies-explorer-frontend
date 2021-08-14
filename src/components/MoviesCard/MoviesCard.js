@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouteMatch } from "react-router-dom";
 import "./MoviesCard.css";
 
@@ -6,12 +6,8 @@ export default function MoviesCard({
   movie,
   onSaveClick,
   onDeleteClick,
-  isSaved,
 }) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
-
-
-
 
   const cardSaveButtonClassName = `movie__save-button ${
     movie.isSaved && "movie__save-button_active"
@@ -29,12 +25,10 @@ export default function MoviesCard({
 
   function handleSaveClick(movie) {
     onSaveClick(movie);
-
   }
 
   function handleDeleteClick(movie) {
     onDeleteClick(movie);
-
   }
 
   return (
