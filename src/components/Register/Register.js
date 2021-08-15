@@ -4,7 +4,7 @@ import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Register.css";
 
-export default function Register({ onRegister, isSending }) {
+export default function Register({ onRegister, isSending, apiError }) {
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
 
@@ -33,6 +33,7 @@ export default function Register({ onRegister, isSending }) {
         redirectLink="/signin"
         redirect="Войти"
         isDisabled={!isFormValid || isSending}
+        {...{ apiError }}
       >
         <label className="form__label" htmlFor="name">
           Имя

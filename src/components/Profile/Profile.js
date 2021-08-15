@@ -5,7 +5,7 @@ import { useFormWithValidation } from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 
-export default function Profile({ isSending, onLogout, onUpdateUser }) {
+export default function Profile({ isSending, onLogout, onUpdateUser, apiError }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
@@ -86,6 +86,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser }) {
               disabled
             />
           </label>
+          <p className="profile__api-error">{apiError}</p>
           <button
             className={submitButtonClassName}
             type="submit"

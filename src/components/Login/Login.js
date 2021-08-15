@@ -4,7 +4,7 @@ import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
 import "./Login.css";
 
-export default function Login({ onLogin, isSending }) {
+export default function Login({ onLogin, isSending, apiError }) {
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
 
@@ -32,6 +32,7 @@ export default function Login({ onLogin, isSending }) {
         redirectLink="/signup"
         redirect="Регистрация"
         isDisabled={!isFormValid || isSending}
+        {...{ apiError }}
       >
         <label className="form__label" htmlFor="email">
           E-mail

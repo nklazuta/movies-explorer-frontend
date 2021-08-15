@@ -15,7 +15,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isSending, setIsSending] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isError, setIsError] = useState();
+  const [apiError, setApiError] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -29,15 +29,14 @@ export default function App() {
   }, [isLoggedIn]);
 
   const tokenCheck = () => {
-    getContent();
+    MainApi.getUser()
+      .then(() => setIsLoggedIn(true))
+      .catch((err) => console.log("Ошибка: ", err));
   };
 
   const getContent = () => {
     MainApi.getUser()
-      .then((res) => {
-        setCurrentUser(res);
-        setIsLoggedIn(true);
-      })
+      .then((res) => setCurrentUser(res))
       .catch((err) => console.log("Ошибка: ", err));
   };
 
@@ -45,9 +44,7 @@ export default function App() {
     setIsSending(true);
     return MainApi.register(data)
       .then(() => onLogin(data))
-      .catch((err) => {
-        console.log("Ошибка: ", err);
-      })
+      .catch((err) => setApiError(err.message))
       .finally(() => setIsSending(false));
   };
 
@@ -59,9 +56,7 @@ export default function App() {
         setIsLoggedIn(true);
         history.push("/movies");
       })
-      .catch((err) => {
-        console.log("Ошибка: ", err);
-      })
+      .catch((err) => setApiError(err.message))
       .finally(() => setIsSending(false));
   };
 
@@ -84,7 +79,7 @@ export default function App() {
       .then((res) => {
         setCurrentUser(res);
       })
-      .catch((err) => console.log("Ошибка: ", err))
+      .catch((err) => setApiError(err.message))
       .finally(() => setIsSending(false));
   };
 
@@ -105,15 +100,15 @@ export default function App() {
           </Route>
 
           <Route path="/profile">
-            <Profile {...{ onLogout, isSending, onUpdateUser }} />
+            <Profile {...{ onLogout, isSending, onUpdateUser, apiError }} />
           </Route>
 
           <Route path="/signin">
-            <Login {...{ onLogin, isSending }} />
+            <Login {...{ onLogin, isSending, apiError }} />
           </Route>
 
           <Route path="/signup">
-            <Register {...{ onRegister, isSending }} />
+            <Register {...{ onRegister, isSending, apiError }} />
           </Route>
 
           <Route path="*">
