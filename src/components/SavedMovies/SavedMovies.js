@@ -34,7 +34,7 @@ export default function SavedMovies() {
   useEffect(() => {
     filteredMovies.length !== 0
       ? showCards(filteredMovies)
-      : showCards(savedMovies.data);
+      : showCards(savedMovies);
   }, [filteredMovies, savedMovies]);
 
   //загрузить сохраненные пользователем фильмы
@@ -69,7 +69,7 @@ export default function SavedMovies() {
   //создать массив карточек для отрисовки
   const showCards = (movies) => {
     checkArrayLength(movies);
-    setShownMovies(movies);
+    setShownMovies(movies.data ? movies.data : movies);
   };
 
   //обработчик строки поиска
