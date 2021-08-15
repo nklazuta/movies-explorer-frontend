@@ -34,12 +34,12 @@ export default function App() {
 
   const getContent = () => {
     MainApi.getUser()
-    .then((res) => {
-      setCurrentUser(res);
-      setIsLoggedIn(true);
-    })
-    .catch((err) => console.log("Ошибка: ", err));
-  }
+      .then((res) => {
+        setCurrentUser(res);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => console.log("Ошибка: ", err));
+  };
 
   const onRegister = (data) => {
     setIsSending(true);
@@ -69,6 +69,10 @@ export default function App() {
     return MainApi.logout()
       .then(() => {
         setIsLoggedIn(false);
+        localStorage.removeItem("searchKey");
+        localStorage.removeItem("isChecked");
+        localStorage.removeItem("filteredMovies");
+        localStorage.removeItem("savedMovies");
         history.push("/");
       })
       .catch((err) => console.log("Ошибка: ", err));
