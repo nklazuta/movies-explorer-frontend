@@ -9,7 +9,11 @@ import { useFilter } from "../../hooks/useFilter";
 import { useNumberOfCards } from "../../hooks/useNumberOfCards";
 import * as MoviesApi from "../../utils/MoviesApi";
 import * as MainApi from "../../utils/MainApi";
-import { NOT_FOUND_ERR, FAILED_TO_FETCH_ERR } from "../../utils/utils";
+import {
+  NOT_FOUND_ERR,
+  FAILED_TO_FETCH_ERR,
+  SEARCH_VALUE_MISSING,
+} from "../../utils/utils";
 import "./Movies.css";
 
 export default function Movies() {
@@ -18,7 +22,7 @@ export default function Movies() {
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
   const [filteredMoviesFromStorage, setFilteredMoviesFromStorage] = useState(
-    []
+
   );
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
@@ -143,7 +147,7 @@ export default function Movies() {
   //определить видимость кнопки "Ещё"
   const hideMoreButton = () => {
     const movies =
-      filteredMovies.length !== 0? filteredMovies : filteredMoviesFromStorage;
+      filteredMovies.length !== 0 ? filteredMovies : filteredMoviesFromStorage;
     setIsButtonHidden(currentShownCardsNumber >= movies.length);
   };
 
@@ -177,6 +181,14 @@ export default function Movies() {
 
   //обработчик строки поиска
   function handleSearchChange(evt) {
+    const input = evt.target;
+
+    if (input.validity.valueMissing) {
+      input.setCustomValidity(SEARCH_VALUE_MISSING);
+    } else {
+      input.setCustomValidity("");
+    }
+
     setSearchKey(evt.target.value);
   }
 

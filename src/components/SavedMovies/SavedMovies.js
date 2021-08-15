@@ -6,7 +6,11 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { useFilter } from "../../hooks/useFilter";
 import * as MainApi from "../../utils/MainApi";
-import { NOT_FOUND_ERR, FAILED_TO_FETCH_ERR } from "../../utils/utils";
+import {
+  NOT_FOUND_ERR,
+  FAILED_TO_FETCH_ERR,
+  SEARCH_VALUE_MISSING,
+} from "../../utils/utils";
 import "./SavedMovies.css";
 
 export default function SavedMovies() {
@@ -21,9 +25,7 @@ export default function SavedMovies() {
   //эффекты при загрузке страницы
   useEffect(() => {
     if (localStorage.getItem("savedMovies") !== null) {
-      setSavedMovies(
-        JSON.parse(localStorage.getItem("savedMovies"))
-      );
+      setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
     }
 
     loadSavedMovies();
@@ -54,7 +56,7 @@ export default function SavedMovies() {
     MainApi.deleteMovie(movie.movieId)
       .then(() => {
         setSavedMovies((state) =>
-        state.filter((m) => m.movieId !== movie.movieId)
+          state.filter((m) => m.movieId !== movie.movieId)
         );
       })
       .catch((err) => console.log("Ошибка: ", err));
@@ -74,6 +76,14 @@ export default function SavedMovies() {
 
   //обработчик строки поиска
   function handleSearchChange(evt) {
+    const input = evt.target;
+
+    if (input.validity.valueMissing) {
+      input.setCustomValidity(SEARCH_VALUE_MISSING);
+    } else {
+      input.setCustomValidity("");
+    }
+
     setSearchKey(evt.target.value);
   }
 

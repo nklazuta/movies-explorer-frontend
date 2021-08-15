@@ -26,7 +26,7 @@ export default function App() {
   useEffect(() => {
     if (isLoggedIn) {
       getContent();
-      history.push("/");
+      history.push("/movies");
     }
   }, [history, isLoggedIn]);
 
@@ -46,7 +46,7 @@ export default function App() {
     setIsSending(true);
     return MainApi.register(data)
       .then(() => onLogin(data))
-      .catch((err) => setApiError(err.message))
+      .catch((err) => setApiError(err))
       .finally(() => setIsSending(false));
   };
 
@@ -58,7 +58,7 @@ export default function App() {
         setIsLoggedIn(true);
         history.push("/movies");
       })
-      .catch((err) => setApiError(err.message))
+      .catch((err) => setApiError(err))
       .finally(() => setIsSending(false));
   };
 
@@ -81,7 +81,7 @@ export default function App() {
       .then((res) => {
         setCurrentUser(res);
       })
-      .catch((err) => setApiError(err.message))
+      .catch((err) => setApiError(err))
       .finally(() => setIsSending(false));
   };
 
