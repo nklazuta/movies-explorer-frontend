@@ -99,7 +99,7 @@
   line-height: 1.2;
   text-align: center;
   color: #ff004c;
-  padding: 345px 0 0;
+  padding: 300px 0 0;
   margin: 0;
 }
 
@@ -137,7 +137,7 @@
 .profile__container {
   display: flex;
   flex-direction: column;
-  padding: 335px 0 40px;
+  padding: 20px 0 40px;
 }
 
 .profile__container_type_invisible {
@@ -204,10 +204,6 @@
     line-height: 1.21;
   }
 
-  .profile__container {
-    padding: 178px 0 40px;
-  }
-
   .profile__edit-button {
     font-size: 13px;
     line-height: 1.23;
@@ -224,11 +220,8 @@
     padding: 74px 0 123px;
   }
 
-  .profile__submit {
-    margin: 220px 0 40px;
-  }
-
-  .profile__container {
-    padding: 220px 0 40px;
+  .profile__api-error {
+    font-size: 11px;
+    padding: 185px 0 0;
   }
 }

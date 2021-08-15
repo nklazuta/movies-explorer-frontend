@@ -50,7 +50,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser, apiError })
     evt.preventDefault();
     onUpdateUser({
       name: values.name,
-      email: currentUser.mail,
+      email: currentUser.email,
     });
     setSubmitButtonVisible(false);
     setEditContainerVisible(true);
@@ -71,7 +71,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser, apiError })
                   id="name"
                   name="name"
                   type="text"
-                  pattern="/[\wа-я\s\-ё]/gi"
+                  pattern="[A-Za-zА-Яа-яЁё\s\-]{2,30}"
                   placeholder="Имя"
                   minLength="2"
                   maxLength="30"
