@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+//import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFilter } from "../../hooks/useFilter";
 import { useNumberOfCards } from "../../hooks/useNumberOfCards";
 import * as MoviesApi from "../../utils/MoviesApi";
@@ -24,7 +24,7 @@ export default function Movies() {
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
-  const currentUser = useContext(CurrentUserContext);
+  //const currentUser = useContext(CurrentUserContext);
   const { filteredMovies, filterMoviesHandle } = useFilter();
   const {
     currentShownCardsNumber,
@@ -119,13 +119,12 @@ export default function Movies() {
 
   //найти уже сохраненные фильмы в массиве отфильтрованных фильмов
   const findSavedMovies = (movies) => {
-    console.log(movies)
-    console.log(savedMovies)
-    movies.map((movie) => {
-      const alreadySavedMovie = savedMovies.data.some((m) => m.movieId === movie.id);
-      console.log(alreadySavedMovie);
-      return alreadySavedMovie ? movie.isSaved = true : movie.isSaved = false;
-    });
+    if (savedMovies.length !== 0) {
+      movies.map((movie) => {
+        const alreadySavedMovie = savedMovies.data.some((m) => m.movieId === movie.id);
+        return alreadySavedMovie ? movie.isSaved = true : movie.isSaved = false;
+      });
+    }
   };
 
   //создать массив карточек с условием показа карточек не больше заданного количества
