@@ -44,6 +44,7 @@ export default function Register({ onRegister, isSending, apiError }) {
             id="name"
             name="name"
             type="text"
+            pattern="/[\wа-я\s\-ё]/gi"
             placeholder="Виталий"
             autoComplete="name"
             minLength="2"

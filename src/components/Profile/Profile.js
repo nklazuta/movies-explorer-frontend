@@ -59,6 +59,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser, apiError })
                   id="name"
                   name="name"
                   type="text"
+                  pattern="/[\wа-я\s\-ё]/gi"
                   placeholder="Имя"
                   minLength="2"
                   maxLength="30"
