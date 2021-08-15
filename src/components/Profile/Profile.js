@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import { useFormWithValidation } from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { NAME_PATTERN_MISMATCH } from "../../utils/utils";
 import "./Profile.css";
 
 export default function Profile({ isSending, onLogout, onUpdateUser, apiError }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
+    const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
+    const [isEditContainerVisible, setEditContainerVisible] = useState(true);
 
   useEffect(() => {
     resetForm({});
   }, [resetForm]);
-
-  const [isSubmitButtonVisible, setSubmitButtonVisible] = useState(false);
-  const [isEditContainerVisible, setEditContainerVisible] = useState(true);
 
   const inputNameClassName = `profile__input profile__input_type_name ${
     !isInputValid && "profile__input_type_error"
@@ -28,6 +28,18 @@ export default function Profile({ isSending, onLogout, onUpdateUser, apiError })
   const containerClassName = `profile__container ${
     !isEditContainerVisible && "profile__container_type_invisible"
   }`;
+
+  function handleNameChange(evt) {
+    const input = evt.target;
+
+    if (input.validity.patternMismatch) {
+      input.setCustomValidity(NAME_PATTERN_MISMATCH);
+    } else {
+      input.setCustomValidity("");
+    }
+
+    handleChange(evt);
+  }
 
   function handleEditButton() {
     setSubmitButtonVisible(true);
@@ -64,7 +76,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser, apiError })
                   minLength="2"
                   maxLength="30"
                   value={values.name || ""}
-                  onChange={handleChange}
+                  onChange={handleNameChange}
                   required
                 />
                 <span className="profile__error" id="name-error">

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
+import { NAME_PATTERN_MISMATCH } from "../../utils/utils";
 import "./Register.css";
 
 export default function Register({ onRegister, isSending, apiError }) {
@@ -12,14 +13,26 @@ export default function Register({ onRegister, isSending, apiError }) {
     resetForm({});
   }, [resetForm]);
 
-  const handleSubmit = (evt) => {
+  function handleNameChange(evt) {
+    const input = evt.target;
+
+    if (input.validity.patternMismatch) {
+      input.setCustomValidity(NAME_PATTERN_MISMATCH);
+    } else {
+      input.setCustomValidity("");
+    }
+
+    handleChange(evt);
+  }
+
+  function handleSubmit(evt) {
     evt.preventDefault();
     onRegister({
       name: values.name,
       email: values.email,
       password: values.password,
     });
-  };
+  }
 
   return (
     <section className="register">
@@ -44,14 +57,14 @@ export default function Register({ onRegister, isSending, apiError }) {
             id="name"
             name="name"
             type="text"
-            pattern="/[\wа-я\s\-ё]/gi"
+            pattern="[A-Za-zА-Яа-яЁё\s\-]{2,30}"
             placeholder="Виталий"
             autoComplete="name"
             minLength="2"
             maxLength="30"
             value={values.name || ""}
-            onChange={handleChange}
             required
+            onChange={handleNameChange}
           />
           <span className="form__error" id="name-error">
             {errors.name || ""}

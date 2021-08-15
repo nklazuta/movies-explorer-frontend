@@ -12,7 +12,7 @@ export default function Login({ onLogin, isSending, apiError }) {
     resetForm({});
   }, [resetForm]);
 
-  const handleSubmit = (evt) => {
+  function handleSubmit(evt) {
     evt.preventDefault();
     onLogin({
       email: values.email,
