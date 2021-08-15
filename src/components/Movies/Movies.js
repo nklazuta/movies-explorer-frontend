@@ -26,6 +26,7 @@ export default function Movies() {
   const [savedMovies, setSavedMovies] = useState(null);
   //const currentUser = useContext(CurrentUserContext);
   const { filteredMovies, filterMoviesHandle } = useFilter();
+
   const {
     currentShownCardsNumber,
     checkWindowWidth,
@@ -45,9 +46,7 @@ export default function Movies() {
     }
 
     if (localStorage.getItem("savedMovies") !== null) {
-      setSavedMovies(
-        JSON.parse(localStorage.getItem("savedMovies"))
-      );
+      setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
     }
 
     checkWindowWidth();
@@ -56,7 +55,7 @@ export default function Movies() {
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
-    filteredMovies !== null
+    filteredMovies.length !== 0
       ? showCards(filteredMovies)
       : showCards(filteredMoviesFromStorage);
     hideMoreButton();
@@ -64,11 +63,11 @@ export default function Movies() {
 
   //загрузить все фильмы с сервера BeatFilm
   const loadAllMovieCards = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     MoviesApi.getMovies()
       .then((res) => {
         setAllMovies(res);
-        filterMoviesHandle(res, searchKey);
+        filterMoviesHandle(res, searchKey, isCheckedCheckbox);
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -82,10 +81,7 @@ export default function Movies() {
     MainApi.getMovies()
       .then((res) => {
         setSavedMovies(res);
-        localStorage.setItem(
-          "savedMovies",
-          JSON.stringify(res)
-        );
+        localStorage.setItem("savedMovies", JSON.stringify(res));
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -107,7 +103,7 @@ export default function Movies() {
     MainApi.deleteMovie(movie.movieId)
       .then((newMovie) => {
         setSavedMovies((state) =>
-        state.map((m) => m.id === movie.id ? newMovie : m)
+          state.map((m) => (m.id === movie.id ? newMovie : m))
         );
         newMovie.isSaved = false;
       })
@@ -116,15 +112,21 @@ export default function Movies() {
 
   //проверить, что массив с фильмами не пустой
   const checkArrayLength = (movies) => {
-    return movies.length === 0 ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
+    return movies.length === 0
+      ? setMoviesError(NOT_FOUND_ERR)
+      : setMoviesError("");
   };
 
   //найти уже сохраненные фильмы в массиве отфильтрованных фильмов
   const findSavedMovies = (movies) => {
     if (savedMovies !== null) {
       movies.map((movie) => {
-        const alreadySavedMovie = savedMovies.data.some((m) => m.movieId === movie.id);
-        return alreadySavedMovie ? movie.isSaved = true : movie.isSaved = false;
+        const alreadySavedMovie = savedMovies.data.some(
+          (m) => m.movieId === movie.id
+        );
+        return alreadySavedMovie
+          ? (movie.isSaved = true)
+          : (movie.isSaved = false);
       });
     }
   };
@@ -135,26 +137,15 @@ export default function Movies() {
     checkArrayLength(filteredMovies);
     findSavedMovies(filteredMovies);
     let movies = filteredMovies.slice(0, currentShownCardsNumber);
-    return setShownMovies(movies);
+    setShownMovies(movies);
   };
 
   //определить видимость кнопки "Ещё"
   const hideMoreButton = () => {
-    const movies = filteredMovies !== null
-      ? filteredMovies
-      : filteredMoviesFromStorage;
+    const movies =
+      filteredMovies.length !== 0? filteredMovies : filteredMoviesFromStorage;
     setIsButtonHidden(currentShownCardsNumber >= movies.length);
   };
-
-  //обработчик строки поиска
-  function handleSearchChange(evt) {
-    setSearchKey(evt.target.value);
-  }
-
-  //обработчик чекбокса
-  function handleFilterCheckboxClick() {
-    setIsCheckedCheckbox(!isCheckedCheckbox);
-  }
 
   //обработчик клика кнопки лайка
   function handleSaveButtonClick(movie) {
@@ -184,20 +175,35 @@ export default function Movies() {
     }
   }
 
+  //обработчик строки поиска
+  function handleSearchChange(evt) {
+    setSearchKey(evt.target.value);
+  }
+
   //обработчик сабмита формы поиска
   function handleSubmitSearch(evt) {
     evt.preventDefault();
+    setInitialNumberOfCards();
+
     if (allMovies === null) {
       loadAllMovieCards();
     } else {
-      //setIsLoading(true);
-      //setTimeout(() => {
-      //  setIsLoading(false);
-      //}, 200);
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
       filterMoviesHandle(allMovies, searchKey, isCheckedCheckbox);
     }
+  }
 
-    setInitialNumberOfCards();
+  //обработчик чекбокса
+  function handleFilterCheckboxClick() {
+    setIsCheckedCheckbox(!isCheckedCheckbox);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+    filterMoviesHandle(allMovies, searchKey, !isCheckedCheckbox);
   }
 
   //отслеживать изменение ширины экрана

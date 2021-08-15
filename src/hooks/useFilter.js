@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export function useFilter() {
-  const [filteredMovies, setFilteredMovies] = useState(null);
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
   function filterMoviesHandle(movies, keyword, isChecked) {
     localStorage.setItem("searchKey", keyword);
@@ -20,14 +20,12 @@ export function useFilter() {
         (movie) => movie.duration > 40
       );
 
-      //findSavedMovies(filteredMoviesByCheckbox);
       localStorage.setItem(
         "filteredMovies",
         JSON.stringify(filteredMoviesByCheckbox)
       );
       return setFilteredMovies(filteredMoviesByCheckbox);
     } else {
-      //findSavedMovies(filteredMoviesByKeyword);
       localStorage.setItem(
         "filteredMovies",
         JSON.stringify(filteredMoviesByKeyword)
