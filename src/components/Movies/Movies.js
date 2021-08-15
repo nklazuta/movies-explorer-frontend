@@ -13,7 +13,7 @@ import { NOT_FOUND_ERR, FAILED_TO_FETCH_ERR } from "../../utils/utils";
 import "./Movies.css";
 
 export default function Movies() {
-  const [allMovies, setAllMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
@@ -23,7 +23,7 @@ export default function Movies() {
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState(null);
   //const currentUser = useContext(CurrentUserContext);
   const { filteredMovies, filterMoviesHandle } = useFilter();
   const {
@@ -52,26 +52,29 @@ export default function Movies() {
 
     checkWindowWidth();
     loadSavedMovies();
-    loadAllMovieCards();
-
   }, []);
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
-    filteredMovies.length !== 0
+    filteredMovies !== null
       ? showCards(filteredMovies)
       : showCards(filteredMoviesFromStorage);
     hideMoreButton();
   }, [currentShownCardsNumber, filteredMovies, filteredMoviesFromStorage]);
 
-  //загрузить все фильмы с сервера Beat Movies
+  //загрузить все фильмы с сервера BeatFilm
   const loadAllMovieCards = () => {
+    setIsLoading(true)
     MoviesApi.getMovies()
-      .then((res) => setAllMovies(res))
+      .then((res) => {
+        setAllMovies(res);
+        filterMoviesHandle(res, searchKey);
+      })
       .catch((err) => {
         console.log("Ошибка: ", err);
         setMoviesError(FAILED_TO_FETCH_ERR);
       })
+      .finally(() => setIsLoading(false));
   };
 
   //загрузить сохраненные пользователем фильмы
@@ -113,13 +116,12 @@ export default function Movies() {
 
   //проверить, что массив с фильмами не пустой
   const checkArrayLength = (movies) => {
-    const empty = movies.length === 0;
-    return empty ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
+    return movies.length === 0 ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
   };
 
   //найти уже сохраненные фильмы в массиве отфильтрованных фильмов
   const findSavedMovies = (movies) => {
-    if (savedMovies.length !== 0) {
+    if (savedMovies !== null) {
       movies.map((movie) => {
         const alreadySavedMovie = savedMovies.data.some((m) => m.movieId === movie.id);
         return alreadySavedMovie ? movie.isSaved = true : movie.isSaved = false;
@@ -138,11 +140,10 @@ export default function Movies() {
 
   //определить видимость кнопки "Ещё"
   const hideMoreButton = () => {
-    const movies = filteredMovies.length !== 0
+    const movies = filteredMovies !== null
       ? filteredMovies
       : filteredMoviesFromStorage;
-    const isShownArrayLonger = currentShownCardsNumber >= movies.length;
-    setIsButtonHidden(isShownArrayLonger);
+    setIsButtonHidden(currentShownCardsNumber >= movies.length);
   };
 
   //обработчик строки поиска
@@ -186,11 +187,16 @@ export default function Movies() {
   //обработчик сабмита формы поиска
   function handleSubmitSearch(evt) {
     evt.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 250);
-    filterMoviesHandle(allMovies, searchKey, isCheckedCheckbox);
+    if (allMovies === null) {
+      loadAllMovieCards();
+    } else {
+      //setIsLoading(true);
+      //setTimeout(() => {
+      //  setIsLoading(false);
+      //}, 200);
+      filterMoviesHandle(allMovies, searchKey, isCheckedCheckbox);
+    }
+
     setInitialNumberOfCards();
   }
 
@@ -223,9 +229,9 @@ export default function Movies() {
           />
         )}
         <button
-          className={`movies__more-button ${
-            isButtonHidden && "movies__more-button_hidden"
-          }`}
+          className={`movies__more-button
+          ${isButtonHidden && "movies__more-button_hidden"}
+          ${isLoading && "movies__more-button_hidden"}`}
           type="button"
           onClick={handleMoreButtonClick}
         >
