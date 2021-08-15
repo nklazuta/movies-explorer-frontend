@@ -7,6 +7,7 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import * as MainApi from "../../utils/MainApi";
 import "./App.css";
@@ -25,8 +26,9 @@ export default function App() {
   useEffect(() => {
     if (isLoggedIn) {
       getContent();
+      history.push("/");
     }
-  }, [isLoggedIn]);
+  }, [history, isLoggedIn]);
 
   const tokenCheck = () => {
     MainApi.getUser()
@@ -91,17 +93,23 @@ export default function App() {
             <Main {...{ isLoggedIn }} />
           </Route>
 
-          <Route path="/movies">
-            <Movies />
-          </Route>
+          <ProtectedRoute
+            path="/movies"
+            component={Movies}
+            {...{ isLoggedIn }}
+          />
 
-          <Route path="/saved-movies">
-            <SavedMovies />
-          </Route>
+          <ProtectedRoute
+            path="/saved-movies"
+            component={SavedMovies}
+            {...{ isLoggedIn }}
+          />
 
-          <Route path="/profile">
-            <Profile {...{ onLogout, isSending, onUpdateUser, apiError }} />
-          </Route>
+          <ProtectedRoute
+            path="/profile"
+            component={Profile}
+            {...{ isLoggedIn, onLogout, isSending, onUpdateUser, apiError }}
+          />
 
           <Route path="/signin">
             <Login {...{ onLogin, isSending, apiError }} />
