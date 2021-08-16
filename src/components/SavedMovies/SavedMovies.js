@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFilter } from "../../hooks/useFilter";
 import * as MainApi from "../../utils/MainApi";
 import {
@@ -14,6 +15,7 @@ import {
 import "./SavedMovies.css";
 
 export default function SavedMovies() {
+  const currentUser = useContext(CurrentUserContext);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
@@ -29,7 +31,7 @@ export default function SavedMovies() {
     }
 
     loadSavedMovies();
-    console.log(savedMovies);
+    console.log(savedMovies)
   }, []);
 
   //эффекты при изменении массива карточек
@@ -43,7 +45,9 @@ export default function SavedMovies() {
   const loadSavedMovies = () => {
     MainApi.getMovies()
       .then((res) => {
-        setSavedMovies(res);
+        setSavedMovies(
+          res.data.filter((movie) => movie.owner === currentUser._id)
+        );
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -53,7 +57,7 @@ export default function SavedMovies() {
 
   //запрос на удаление фильма
   const deleteMovie = (movie) => {
-    MainApi.deleteMovie(movie.movieId)
+    MainApi.deleteMovie(movie._id)
       .then(() => {
         setSavedMovies((state) =>
           state.filter((m) => m.movieId !== movie.movieId)

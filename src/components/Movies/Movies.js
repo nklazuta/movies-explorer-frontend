@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-//import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFilter } from "../../hooks/useFilter";
 import { useNumberOfCards } from "../../hooks/useNumberOfCards";
 import * as MoviesApi from "../../utils/MoviesApi";
@@ -22,13 +22,13 @@ export default function Movies() {
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
   const [filteredMoviesFromStorage, setFilteredMoviesFromStorage] = useState(
-
+    []
   );
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
-  const [savedMovies, setSavedMovies] = useState(null);
-  //const currentUser = useContext(CurrentUserContext);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
   const { filteredMovies, filterMoviesHandle } = useFilter();
 
   const {
@@ -59,11 +59,22 @@ export default function Movies() {
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
-    filteredMovies.length !== 0
-      ? showCards(filteredMovies)
-      : showCards(filteredMoviesFromStorage);
+    if (localStorage.getItem("filteredMovies") !== null) {
+      showCards(
+        filteredMovies.length !== 0 ? filteredMovies : filteredMoviesFromStorage
+      );
+    }
+
+    findSavedMovies(
+      filteredMovies.length !== 0 ? filteredMovies : filteredMoviesFromStorage
+    );
     hideMoreButton();
-  }, [currentShownCardsNumber, filteredMovies, filteredMoviesFromStorage]);
+  }, [
+    currentShownCardsNumber,
+    filteredMovies,
+    filteredMoviesFromStorage,
+    savedMovies,
+  ]);
 
   //загрузить все фильмы с сервера BeatFilm
   const loadAllMovieCards = () => {
@@ -82,10 +93,17 @@ export default function Movies() {
 
   //загрузить сохраненные пользователем фильмы
   const loadSavedMovies = () => {
-    MainApi.getMovies()
+    return MainApi.getMovies()
       .then((res) => {
-        setSavedMovies(res);
-        localStorage.setItem("savedMovies", JSON.stringify(res));
+        setSavedMovies(
+          res.data.filter((movie) => movie.owner === currentUser._id)
+        );
+        localStorage.setItem(
+          "savedMovies",
+          JSON.stringify(
+            res.data.filter((movie) => movie.owner === currentUser._id)
+          )
+        );
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -96,18 +114,23 @@ export default function Movies() {
   const saveMovie = (data) => {
     MainApi.saveMovie(data)
       .then((newMovie) => {
-        setSavedMovies((state) => [newMovie, ...state]);
-        newMovie.isSaved = true;
+        setSavedMovies([newMovie, ...savedMovies]);
+        localStorage.setItem(
+          "savedMovies",
+          JSON.stringify([newMovie, ...savedMovies])
+        );
       })
       .catch((err) => console.log("Ошибка: ", err));
   };
 
   //запрос на удаление фильма
   const deleteMovie = (movie) => {
-    MainApi.deleteMovie(movie.movieId)
+    console.log(movie)
+    MainApi.deleteMovie(movie._id)
       .then((newMovie) => {
-        setSavedMovies((state) =>
-          state.map((m) => (m.id === movie.id ? newMovie : m))
+
+        setSavedMovies(
+          savedMovies.map((m) => (m.id === movie.id ? newMovie : m))
         );
         newMovie.isSaved = false;
       })
@@ -123,9 +146,9 @@ export default function Movies() {
 
   //найти уже сохраненные фильмы в массиве отфильтрованных фильмов
   const findSavedMovies = (movies) => {
-    if (savedMovies !== null) {
+    if (savedMovies.length !== 0) {
       movies.map((movie) => {
-        const alreadySavedMovie = savedMovies.data.some(
+        const alreadySavedMovie = savedMovies.some(
           (m) => m.movieId === movie.id
         );
         return alreadySavedMovie
@@ -153,7 +176,6 @@ export default function Movies() {
 
   //обработчик клика кнопки лайка
   function handleSaveButtonClick(movie) {
-    console.log(movie.isSaved);
     if (!movie.isSaved) {
       saveMovie({
         country: movie.country ? movie.country : "Страна не указана",
