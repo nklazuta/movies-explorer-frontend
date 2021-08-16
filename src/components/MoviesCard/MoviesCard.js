@@ -42,7 +42,7 @@ export default function MoviesCard({
       >
         <img
           className="movie__poster"
-          src={`https://api.nomoreparties.co${movie.image.url}`}
+          src={movie.image.url ? `https://api.nomoreparties.co${movie.image.url}` : movie.image}
           alt={`Постер фильма '${movie.nameRU}'`}
         />
       </a>
