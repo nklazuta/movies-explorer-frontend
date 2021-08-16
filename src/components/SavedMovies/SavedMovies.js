@@ -26,28 +26,32 @@ export default function SavedMovies() {
 
   //эффекты при загрузке страницы
   useEffect(() => {
+    loadSavedMovies();
+
     if (localStorage.getItem("savedMovies") !== null) {
       setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
     }
-
-    loadSavedMovies();
-    console.log(savedMovies)
   }, []);
 
-  //эффекты при изменении массива карточек
+  //эффект при изменении массива сохраненных карточек
   useEffect(() => {
-    filteredMovies.length !== 0
-      ? showCards(filteredMovies)
-      : showCards(savedMovies);
-  }, [filteredMovies, savedMovies]);
+    showCards(savedMovies);
+  }, [savedMovies]);
+
+  //эффект при изменении массива отфильтрованных карточек
+  useEffect(() => {
+    showCards(filteredMovies);
+  }, [filteredMovies]);
 
   //загрузить сохраненные пользователем фильмы
   const loadSavedMovies = () => {
-    MainApi.getMovies()
+    return MainApi.getMovies()
       .then((res) => {
-        setSavedMovies(
-          res.data.filter((movie) => movie.owner === currentUser._id)
+        const movies = res.data.filter(
+          (movie) => movie.owner === currentUser._id
         );
+        setSavedMovies(movies);
+        localStorage.setItem("savedMovies", JSON.stringify(movies));
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -58,18 +62,21 @@ export default function SavedMovies() {
   //запрос на удаление фильма
   const deleteMovie = (movie) => {
     MainApi.deleteMovie(movie._id)
-      .then(() => {
-        setSavedMovies((state) =>
-          state.filter((m) => m.movieId !== movie.movieId)
+      .then((deletedMovie) => {
+        const movies = savedMovies.filter(
+          (m) => m.movieId !== deletedMovie.data.movieId
         );
+        setSavedMovies(movies);
+        localStorage.setItem("savedMovies", JSON.stringify(movies));
       })
       .catch((err) => console.log("Ошибка: ", err));
   };
 
   //проверить, что массив с фильмами не пустой
   const checkArrayLength = (movies) => {
-    const empty = movies.length === 0;
-    return empty ? setMoviesError(NOT_FOUND_ERR) : setMoviesError("");
+    return movies.length === 0
+      ? setMoviesError(NOT_FOUND_ERR)
+      : setMoviesError("");
   };
 
   //создать массив карточек для отрисовки
@@ -94,15 +101,18 @@ export default function SavedMovies() {
   //обработчик чекбокса
   function handleFilterCheckboxClick() {
     setIsCheckedCheckbox(!isCheckedCheckbox);
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+
+    filterMoviesHandle(savedMovies, searchKey, !isCheckedCheckbox);
   }
 
   //обработчик сабмита формы поиска
   function handleSubmitSearch(evt) {
     evt.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 250);
     filterMoviesHandle(savedMovies, searchKey, isCheckedCheckbox);
   }
 
@@ -127,8 +137,7 @@ export default function SavedMovies() {
         ) : (
           <MoviesCardList
             movies={shownMovies}
-            onSaveClick={handleSaveButtonClick}
-            onDeleteClick={handleSaveButtonClick}
+            onClick={handleSaveButtonClick}
             {...{ moviesError, savedMovies }}
           />
         )}

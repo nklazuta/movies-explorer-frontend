@@ -2,13 +2,7 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
-export default function MoviesCardList({
-  movies,
-  moviesError,
-  onSaveClick,
-  onDeleteClick,
-  savedMoviesList,
-}) {
+export default function MoviesCardList({ movies, moviesError, onClick }) {
   return (
     <section className="cards">
       {moviesError !== "" ? (
@@ -17,8 +11,8 @@ export default function MoviesCardList({
         <ul className="cards__list">
           {movies.map((movie) => (
             <MoviesCard
-            key={movie.id ? movie.id : movie.movieId}
-              {...{ movie, onSaveClick, onDeleteClick, savedMoviesList }}
+              key={movie.id ? movie.id : movie.movieId}
+              {...{ movie, onClick }}
             />
           ))}
         </ul>

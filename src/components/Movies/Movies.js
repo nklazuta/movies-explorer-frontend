@@ -17,20 +17,19 @@ import {
 import "./Movies.css";
 
 export default function Movies() {
+  const currentUser = useContext(CurrentUserContext);
+
   const [allMovies, setAllMovies] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
-  const [filteredMoviesFromStorage, setFilteredMoviesFromStorage] = useState(
-    []
-  );
+  const [localFilteredMovies, setLocalFilteredMovies] = useState([]);
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
-  const currentUser = useContext(CurrentUserContext);
-  const { filteredMovies, filterMoviesHandle } = useFilter();
 
+  const { filteredMovies, filterMoviesHandle } = useFilter();
   const {
     currentShownCardsNumber,
     checkWindowWidth,
@@ -41,10 +40,13 @@ export default function Movies() {
 
   //эффекты при загрузке страницы
   useEffect(() => {
+    checkWindowWidth();
+    loadSavedMovies();
+
     if (localStorage.getItem("filteredMovies") !== null) {
       setSearchKey(localStorage.getItem("searchKey"));
       setIsCheckedCheckbox(JSON.parse(localStorage.getItem("isChecked")));
-      setFilteredMoviesFromStorage(
+      setLocalFilteredMovies(
         JSON.parse(localStorage.getItem("filteredMovies"))
       );
     }
@@ -52,27 +54,26 @@ export default function Movies() {
     if (localStorage.getItem("savedMovies") !== null) {
       setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
     }
-
-    checkWindowWidth();
-    loadSavedMovies();
   }, []);
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
+    loadSavedMovies();
+
     if (localStorage.getItem("filteredMovies") !== null) {
       showCards(
-        filteredMovies.length !== 0 ? filteredMovies : filteredMoviesFromStorage
+        filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies
       );
     }
 
     findSavedMovies(
-      filteredMovies.length !== 0 ? filteredMovies : filteredMoviesFromStorage
+      filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies
     );
     hideMoreButton();
   }, [
     currentShownCardsNumber,
     filteredMovies,
-    filteredMoviesFromStorage,
+    localFilteredMovies,
     savedMovies,
   ]);
 
@@ -95,15 +96,11 @@ export default function Movies() {
   const loadSavedMovies = () => {
     return MainApi.getMovies()
       .then((res) => {
-        setSavedMovies(
-          res.data.filter((movie) => movie.owner === currentUser._id)
+        const movies = res.data.filter(
+          (movie) => movie.owner === currentUser._id
         );
-        localStorage.setItem(
-          "savedMovies",
-          JSON.stringify(
-            res.data.filter((movie) => movie.owner === currentUser._id)
-          )
-        );
+        setSavedMovies(movies);
+        localStorage.setItem("savedMovies", JSON.stringify(movies));
       })
       .catch((err) => {
         console.log("Ошибка: ", err);
@@ -125,14 +122,13 @@ export default function Movies() {
 
   //запрос на удаление фильма
   const deleteMovie = (movie) => {
-    console.log(movie)
     MainApi.deleteMovie(movie._id)
-      .then((newMovie) => {
-
-        setSavedMovies(
-          savedMovies.map((m) => (m.id === movie.id ? newMovie : m))
+      .then((deletedMovie) => {
+        const movies = savedMovies.filter(
+          (m) => m.movieId !== deletedMovie.data.movieId
         );
-        newMovie.isSaved = false;
+        setSavedMovies(movies);
+        localStorage.setItem("savedMovies", JSON.stringify(movies));
       })
       .catch((err) => console.log("Ошибка: ", err));
   };
@@ -160,17 +156,17 @@ export default function Movies() {
 
   //создать массив карточек с условием показа карточек не больше заданного количества
   const showCards = (filteredMovies) => {
+    let movies = filteredMovies.slice(0, currentShownCardsNumber);
     setNumberOfShownCards();
     checkArrayLength(filteredMovies);
     findSavedMovies(filteredMovies);
-    let movies = filteredMovies.slice(0, currentShownCardsNumber);
     setShownMovies(movies);
   };
 
   //определить видимость кнопки "Ещё"
   const hideMoreButton = () => {
     const movies =
-      filteredMovies.length !== 0 ? filteredMovies : filteredMoviesFromStorage;
+      filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies;
     setIsButtonHidden(currentShownCardsNumber >= movies.length);
   };
 
@@ -197,7 +193,8 @@ export default function Movies() {
           : "Название на английском не указано",
       });
     } else {
-      deleteMovie(movie);
+      const movieToDelete = savedMovies.find((m) => m.movieId === movie.id);
+      deleteMovie(movieToDelete);
     }
   }
 
@@ -226,6 +223,7 @@ export default function Movies() {
       setTimeout(() => {
         setIsLoading(false);
       }, 200);
+
       filterMoviesHandle(allMovies, searchKey, isCheckedCheckbox);
     }
   }
@@ -233,11 +231,17 @@ export default function Movies() {
   //обработчик чекбокса
   function handleFilterCheckboxClick() {
     setIsCheckedCheckbox(!isCheckedCheckbox);
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 200);
-    filterMoviesHandle(allMovies, searchKey, !isCheckedCheckbox);
+
+    if (allMovies === null) {
+      loadAllMovieCards();
+    } else {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
+
+      filterMoviesHandle(allMovies, searchKey, !isCheckedCheckbox);
+    }
   }
 
   //отслеживать изменение ширины экрана
@@ -263,9 +267,8 @@ export default function Movies() {
         ) : (
           <MoviesCardList
             movies={shownMovies}
-            onSaveClick={handleSaveButtonClick}
-            onDeleteClick={handleSaveButtonClick}
-            {...{ moviesError, savedMovies }}
+            onClick={handleSaveButtonClick}
+            {...{ moviesError }}
           />
         )}
         <button

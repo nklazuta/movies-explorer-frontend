@@ -2,15 +2,15 @@ import React from "react";
 import { useRouteMatch } from "react-router-dom";
 import "./MoviesCard.css";
 
-export default function MoviesCard({
-  movie,
-  onSaveClick,
-  onDeleteClick,
-}) {
+export default function MoviesCard({ movie, onClick }) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
 
   const cardSaveButtonClassName = `movie__save-button ${
     movie.isSaved && "movie__save-button_active"
+  }`;
+
+  const ariaLabelSaveButton = `${
+    !movie.isSaved ? "Добавить в любимые фильмы" : "Удалить из любимых фильмов"
   }`;
 
   const duratioinInHours = (duration) => {
@@ -23,12 +23,8 @@ export default function MoviesCard({
     }
   };
 
-  function handleSaveClick(movie) {
-    onSaveClick(movie);
-  }
-
-  function handleDeleteClick(movie) {
-    onDeleteClick(movie);
+  function handleClick(movie) {
+    onClick(movie);
   }
 
   return (
@@ -42,7 +38,11 @@ export default function MoviesCard({
       >
         <img
           className="movie__poster"
-          src={movie.image.url ? `https://api.nomoreparties.co${movie.image.url}` : movie.image}
+          src={
+            movie.image.url
+              ? `https://api.nomoreparties.co${movie.image.url}`
+              : movie.image
+          }
           alt={`Постер фильма '${movie.nameRU}'`}
         />
       </a>
@@ -50,15 +50,15 @@ export default function MoviesCard({
         <button
           className={cardSaveButtonClassName}
           type="button"
-          aria-label="Добавить в любимые фильмы"
-          onClick={() => handleSaveClick(movie)}
+          aria-label={ariaLabelSaveButton}
+          onClick={() => handleClick(movie)}
         />
       ) : (
         <button
           className="movie__delete-button"
           type="button"
           aria-label="Удалить из любимых фильмов"
-          onClick={() => handleDeleteClick(movie)}
+          onClick={() => handleClick(movie)}
         />
       )}
       <p className="movie__duration">{duratioinInHours(movie.duration)}</p>

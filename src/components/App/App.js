@@ -16,7 +16,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isSending, setIsSending] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [apiError, setApiError] = useState("");
+  const [apiError, setApiError] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function App() {
     setIsSending(true);
     return MainApi.register(data)
       .then(() => onLogin(data))
-      .catch((err) => setApiError(err))
+      .catch((err) => setApiError(err.message === "Failed to fetch" ? err.message : err))
       .finally(() => setIsSending(false));
   };
 
@@ -60,7 +60,7 @@ export default function App() {
         setIsLoggedIn(true);
         history.push("/movies");
       })
-      .catch((err) => setApiError(err))
+      .catch((err) => setApiError(err.message === "Failed to fetch" ? err.message : err))
       .finally(() => setIsSending(false));
   };
 
@@ -83,7 +83,7 @@ export default function App() {
       .then((res) => {
         setCurrentUser(res);
       })
-      .catch((err) => setApiError(err))
+      .catch((err) => setApiError(err.message === "Failed to fetch" ? err.message : err))
       .finally(() => setIsSending(false));
   };
 
