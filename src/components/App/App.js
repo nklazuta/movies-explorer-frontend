@@ -26,13 +26,15 @@ export default function App() {
   useEffect(() => {
     if (isLoggedIn) {
       getContent();
-      history.push("/movies");
     }
-  }, [history, isLoggedIn]);
+  }, [isLoggedIn]);
 
   const tokenCheck = () => {
     MainApi.getUser()
-      .then(() => setIsLoggedIn(true))
+      .then(() => {
+        setIsLoggedIn(true);
+        history.push("/movies");
+      })
       .catch((err) => console.log("Ошибка: ", err));
   };
 
