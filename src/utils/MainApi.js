@@ -5,6 +5,7 @@ export const getMovies = () => {
     method: "GET",
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
   }).then((res) => parseResponse(res));
@@ -15,6 +16,7 @@ export const saveMovie = (data) => {
     method: "POST",
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -26,6 +28,7 @@ export const deleteMovie = (movieId) => {
     method: "DELETE",
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
   }).then((res) => parseResponse(res));
@@ -35,6 +38,7 @@ export const register = ({ email, password, name }) => {
   return fetch(`${MAIN_URL}/signup`, {
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -50,6 +54,7 @@ export const login = ({ email, password }) => {
   return fetch(`${MAIN_URL}/signin`, {
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -73,6 +78,7 @@ export const getUser = () => {
     method: "GET",
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
   }).then((res) => parseResponse(res));
@@ -83,6 +89,7 @@ export const updateUser = ({ name, email }) => {
     method: "PATCH",
     credentials: "include",
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
