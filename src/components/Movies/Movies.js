@@ -27,7 +27,9 @@ export default function Movies() {
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState(
+    JSON.parse(localStorage.getItem("savedMovies"))
+  );
 
   const { filteredMovies, filterMoviesHandle } = useFilter();
   const {
@@ -58,8 +60,6 @@ export default function Movies() {
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
-    loadSavedMovies();
-
     if (localStorage.getItem("filteredMovies") !== null) {
       showCards(
         filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies
@@ -142,7 +142,11 @@ export default function Movies() {
 
   //найти уже сохраненные фильмы в массиве отфильтрованных фильмов
   const findSavedMovies = (movies) => {
-    if (savedMovies.length !== 0) {
+    if (
+      savedMovies !== null &&
+      savedMovies.length !== 0 &&
+      savedMovies !== undefined
+    ) {
       movies.map((movie) => {
         const alreadySavedMovie = savedMovies.some(
           (m) => m.movieId === movie.id

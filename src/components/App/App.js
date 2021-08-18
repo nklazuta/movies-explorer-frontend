@@ -20,7 +20,7 @@ export default function App() {
   const history = useHistory();
 
   useEffect(() => {
-    tokenCheck();
+    getContent();
   }, []);
 
   useEffect(() => {
@@ -29,18 +29,13 @@ export default function App() {
     }
   }, [isLoggedIn]);
 
-  const tokenCheck = () => {
-    MainApi.getUser()
-      .then(() => {
-        setIsLoggedIn(true);
-        history.push("/movies");
-      })
-      .catch((err) => console.log("Ошибка: ", err));
-  };
-
   const getContent = () => {
     MainApi.getUser()
-      .then((res) => setCurrentUser(res))
+      .then((res) => {
+        setIsLoggedIn(true);
+        history.push("/movies");
+        setCurrentUser(res);
+      })
       .catch((err) => console.log("Ошибка: ", err));
   };
 
@@ -56,7 +51,7 @@ export default function App() {
     setIsSending(true);
     return MainApi.login(data)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         setIsLoggedIn(true);
         history.push("/movies");
       })

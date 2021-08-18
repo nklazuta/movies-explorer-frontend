@@ -1,5 +1,5 @@
 export const BEATFILM_URL = "https://api.nomoreparties.co/beatfilm-movies";
-export const MAIN_URL = "https://diplom.nlazuta.nomoredomains.monster";
+export const MAIN_URL = "https://api.diplom.nlazuta.nomoredomains.monster";
 
 export const parseResponse = (res) => {
   return res.ok
