@@ -23,7 +23,6 @@ export default function Movies() {
   const [isLoading, setIsLoading] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
-  const [localFilteredMovies, setLocalFilteredMovies] = useState([]);
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [isButtonHidden, setIsButtonHidden] = useState(false);
@@ -46,11 +45,15 @@ export default function Movies() {
     loadSavedMovies();
 
     if (localStorage.getItem("filteredMovies") !== null) {
+      const localFilteredMovies = JSON.parse(
+        localStorage.getItem("filteredMovies")
+      );
+
       setSearchKey(localStorage.getItem("searchKey"));
       setIsCheckedCheckbox(JSON.parse(localStorage.getItem("isChecked")));
-      setLocalFilteredMovies(
-        JSON.parse(localStorage.getItem("filteredMovies"))
-      );
+      findSavedMovies(localFilteredMovies);
+      hideMoreButton(localFilteredMovies);
+      showCards(localFilteredMovies);
     }
 
     if (localStorage.getItem("savedMovies") !== null) {
@@ -60,22 +63,10 @@ export default function Movies() {
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
-    if (localStorage.getItem("filteredMovies") !== null) {
-      showCards(
-        filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies
-      );
-    }
-
-    findSavedMovies(
-      filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies
-    );
-    hideMoreButton();
-  }, [
-    currentShownCardsNumber,
-    filteredMovies,
-    localFilteredMovies,
-    savedMovies,
-  ]);
+    findSavedMovies(filteredMovies);
+    hideMoreButton(filteredMovies);
+    showCards(filteredMovies);
+  }, [currentShownCardsNumber, filteredMovies, savedMovies]);
 
   //загрузить все фильмы с сервера BeatFilm
   const loadAllMovieCards = () => {
@@ -168,9 +159,7 @@ export default function Movies() {
   };
 
   //определить видимость кнопки "Ещё"
-  const hideMoreButton = () => {
-    const movies =
-      filteredMovies.length !== 0 ? filteredMovies : localFilteredMovies;
+  const hideMoreButton = (movies) => {
     setIsButtonHidden(currentShownCardsNumber >= movies.length);
   };
 
@@ -223,11 +212,6 @@ export default function Movies() {
     if (allMovies === null) {
       loadAllMovieCards();
     } else {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 200);
-
       filterMoviesHandle(allMovies, searchKey, isCheckedCheckbox);
     }
   }
