@@ -7,7 +7,7 @@ export function useFilter() {
     localStorage.setItem("searchKey", keyword);
     localStorage.setItem("isChecked", isChecked);
 
-    let filteredMoviesByKeyword = movies.filter(
+    const filteredMoviesByKeyword = movies.filter(
       (movie) =>
         movie.nameRU.toLowerCase().includes(keyword.toLowerCase()) ||
         (movie.nameEN ? movie.nameEN : "")
@@ -16,7 +16,7 @@ export function useFilter() {
     );
 
     if (!isChecked) {
-      let filteredMoviesByCheckbox = filteredMoviesByKeyword.filter(
+      const filteredMoviesByCheckbox = filteredMoviesByKeyword.filter(
         (movie) => movie.duration > 40
       );
 
