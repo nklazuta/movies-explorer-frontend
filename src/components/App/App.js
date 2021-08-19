@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -33,7 +33,7 @@ export default function App() {
     MainApi.getUser()
       .then((res) => {
         setIsLoggedIn(true);
-        // history.push("/movies");
+        history.go();
         setCurrentUser(res);
       })
       .catch((err) => console.log("Ошибка: ", err));
@@ -109,11 +109,11 @@ export default function App() {
           />
 
           <Route path="/signin">
-            <Login {...{ onLogin, isSending, apiError }} />
+            {!isLoggedIn ? <Login {...{ onLogin, isSending, apiError }} /> : <Redirect to="/movies" />}
           </Route>
 
           <Route path="/signup">
-            <Register {...{ onRegister, isSending, apiError }} />
+          {!isLoggedIn ? <Register {...{ onRegister, isSending, apiError }} /> : <Redirect to="/movies" />}
           </Route>
 
           <Route path="*">
