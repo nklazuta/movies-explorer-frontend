@@ -33,7 +33,7 @@ export default function App() {
     MainApi.getUser()
       .then((res) => {
         setIsLoggedIn(true);
-        history.push("/movies");
+        // history.push("/movies");
         setCurrentUser(res);
       })
       .catch((err) => console.log("Ошибка: ", err));

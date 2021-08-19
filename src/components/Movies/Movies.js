@@ -151,7 +151,7 @@ export default function Movies() {
 
   //создать массив карточек с условием показа карточек не больше заданного количества
   const showCards = (filteredMovies) => {
-    let movies = filteredMovies.slice(0, currentShownCardsNumber);
+    const movies = filteredMovies.slice(0, currentShownCardsNumber);
     setNumberOfShownCards();
     checkArrayLength(filteredMovies);
     findSavedMovies(filteredMovies);
@@ -223,11 +223,6 @@ export default function Movies() {
     if (allMovies === null) {
       loadAllMovieCards();
     } else {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 200);
-
       filterMoviesHandle(allMovies, searchKey, !isCheckedCheckbox);
     }
   }

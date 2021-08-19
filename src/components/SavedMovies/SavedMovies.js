@@ -101,12 +101,6 @@ export default function SavedMovies() {
   //обработчик чекбокса
   function handleFilterCheckboxClick() {
     setIsCheckedCheckbox(!isCheckedCheckbox);
-
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 200);
-
     filterMoviesHandle(savedMovies, searchKey, !isCheckedCheckbox);
   }
 
