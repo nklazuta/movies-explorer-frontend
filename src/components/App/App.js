@@ -9,6 +9,7 @@ import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { SUCCESS_MESSAGE } from "../../utils/utils";
 import * as MainApi from "../../utils/MainApi";
 import "./App.css";
 
@@ -17,6 +18,7 @@ export default function App() {
   const [isSending, setIsSending] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [apiError, setApiError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function App() {
     MainApi.getUser()
       .then((res) => {
         setIsLoggedIn(true);
-        history.go();
+        history.push("/movies");
         setCurrentUser(res);
       })
       .catch((err) => console.log("Ошибка: ", err));
@@ -77,6 +79,7 @@ export default function App() {
     MainApi.updateUser(data)
       .then((res) => {
         setCurrentUser(res);
+        setSuccessMessage(SUCCESS_MESSAGE);
       })
       .catch((err) => setApiError(err.message === "Failed to fetch" ? err.message : err))
       .finally(() => setIsSending(false));
@@ -105,7 +108,7 @@ export default function App() {
           <ProtectedRoute
             path="/profile"
             component={Profile}
-            {...{ isLoggedIn, onLogout, isSending, onUpdateUser, apiError }}
+            {...{ isLoggedIn, onLogout, isSending, onUpdateUser, apiError, successMessage }}
           />
 
           <Route path="/signin">

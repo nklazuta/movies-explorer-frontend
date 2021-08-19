@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import { useFormWithValidation } from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { NAME_PATTERN_MISMATCH, SUCCESS_MESSAGE } from "../../utils/utils";
+import { NAME_PATTERN_MISMATCH } from "../../utils/utils";
 import "./Profile.css";
 
-export default function Profile({ isSending, onLogout, onUpdateUser, apiError }) {
+export default function Profile({ isSending, onLogout, onUpdateUser, apiError, successMessage }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
     useFormWithValidation();
@@ -103,7 +103,7 @@ export default function Profile({ isSending, onLogout, onUpdateUser, apiError })
               disabled
             />
           </label>
-          <p className={apiMessageClassName}>{apiError ? apiError : SUCCESS_MESSAGE}</p>
+          <p className={apiMessageClassName}>{apiError ? apiError : successMessage}</p>
           <button
             className={submitButtonClassName}
             type="submit"

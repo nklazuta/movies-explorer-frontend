@@ -25,9 +25,12 @@ export default function Movies() {
   const [isCheckedCheckbox, setIsCheckedCheckbox] = useState(true);
   const [moviesError, setMoviesError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
-  const [isButtonHidden, setIsButtonHidden] = useState(false);
+  const [isButtonHidden, setIsButtonHidden] = useState(true);
   const [savedMovies, setSavedMovies] = useState(
     JSON.parse(localStorage.getItem("savedMovies"))
+  );
+  const [localFilteredMovies, setLocalFilteredMovies] = useState(
+    JSON.parse(localStorage.getItem("filteredMovies"))
   );
 
   const { filteredMovies, filterMoviesHandle } = useFilter();
@@ -45,15 +48,11 @@ export default function Movies() {
     loadSavedMovies();
 
     if (localStorage.getItem("filteredMovies") !== null) {
-      const localFilteredMovies = JSON.parse(
-        localStorage.getItem("filteredMovies")
+      setLocalFilteredMovies(
+        JSON.parse(localStorage.getItem("filteredMovies"))
       );
-
       setSearchKey(localStorage.getItem("searchKey"));
       setIsCheckedCheckbox(JSON.parse(localStorage.getItem("isChecked")));
-      findSavedMovies(localFilteredMovies);
-      hideMoreButton(localFilteredMovies);
-      showCards(localFilteredMovies);
     }
 
     if (localStorage.getItem("savedMovies") !== null) {
@@ -63,9 +62,11 @@ export default function Movies() {
 
   //эффекты при изменении количества показываемых карточек или массива карточек
   useEffect(() => {
-    findSavedMovies(filteredMovies);
-    hideMoreButton(filteredMovies);
-    showCards(filteredMovies);
+    if (localStorage.getItem("filteredMovies") !== null) {
+      findSavedMovies(localFilteredMovies ? localFilteredMovies : filteredMovies);
+      showCards(localFilteredMovies ? localFilteredMovies : filteredMovies);
+      hideMoreButton(localFilteredMovies ? localFilteredMovies : filteredMovies);
+    }
   }, [currentShownCardsNumber, filteredMovies, savedMovies]);
 
   //загрузить все фильмы с сервера BeatFilm
@@ -228,7 +229,7 @@ export default function Movies() {
   }
 
   //отслеживать изменение ширины экрана
-  window.addEventListener("resize", function() {
+  window.addEventListener("resize", function () {
     setTimeout(() => {
       checkWindowWidth();
     }, 250);
