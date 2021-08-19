@@ -14,6 +14,8 @@ export const NAME_PATTERN_MISMATCH =
   "Имя должно быть не короче 2 симв. и может содержать только латиницу, кириллицу, пробел или дефис";
 export const SEARCH_VALUE_MISSING = "Нужно ввести ключевое слово";
 
+export const SUCCESS_MESSAGE = "Имя успешно изменено";
+
 export const INITIAL_MOBILE_NUMBER_OF_CARDS = 5;
 export const INITIAL_TABLET_NUMBER_OF_CARDS = 8;
 export const INITIAL_COMPUTER_NUMBER_OF_CARDS = 12;

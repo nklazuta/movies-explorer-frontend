@@ -69,7 +69,7 @@
   outline: 1px solid #ff3055;
 }
 
-.profile__error {
+.profile__api-message {
   font-style: normal;
   font-weight: 400;
   font-size: 8px;
@@ -77,6 +77,10 @@
   color: #ff3055;
   padding: 6px 0 0;
   margin: 0;
+}
+
+.profile__api-message_type_success {
+  color: #2BE080;
 }
 
 .profile__value {
