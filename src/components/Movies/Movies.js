@@ -228,7 +228,7 @@ export default function Movies() {
   }
 
   //отслеживать изменение ширины экрана
-  window.addEventListener("resize", () => {
+  window.addEventListener("resize", function() {
     setTimeout(() => {
       checkWindowWidth();
     }, 250);
