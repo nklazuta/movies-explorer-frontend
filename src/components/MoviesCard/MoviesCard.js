@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouteMatch } from "react-router-dom";
+import { SHORT_FILM_DURATION } from "../../utils/utils";
 import "./MoviesCard.css";
 
 export default function MoviesCard({ movie, onClick }) {
@@ -14,7 +15,7 @@ export default function MoviesCard({ movie, onClick }) {
   }`;
 
   const duratioinInHours = (duration) => {
-    if (duration <= 60) {
+    if (duration <= SHORT_FILM_DURATION) {
       return `${duration}м`;
     } else {
       const hours = Math.floor(duration / 60);
