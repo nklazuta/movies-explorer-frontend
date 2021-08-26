@@ -92,6 +92,21 @@
   background: none;
 }
 
+.profile__api-message {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  text-align: center;
+  color: #ff004c;
+  padding: 300px 0 0;
+  margin: 0;
+}
+
+.profile__api-message_type_success {
+  color: #2BE080;
+}
+
 .profile__submit {
   width: 100%;
   font-style: normal;
@@ -104,13 +119,14 @@
   border: none;
   border-radius: 3px;
   padding: 15px 0;
-  margin: 379px 0 40px;
+  margin: 20px 0 40px;
   cursor: pointer;
   transition: opacity .5s ease;
 }
 
 .profile__submit_disabled {
-  opacity: 0.4;
+  color: #c2c2c2;
+  background: #f8f8f8;
   pointer-events: none;
 }
 
@@ -125,7 +141,7 @@
 .profile__container {
   display: flex;
   flex-direction: column;
-  padding: 371px 0 40px;
+  padding: 20px 0 40px;
 }
 
 .profile__container_type_invisible {
@@ -182,14 +198,14 @@
     padding: 236px 0 96px;
   }
 
-  .profile__submit {
-    font-size: 13px;
-    line-height: 1.23;
-    margin: 210px 0 40px;
+  .profile__api-message {
+    font-size: 11px;
+    padding: 178px 0 0;
   }
 
-  .profile__container {
-    padding: 202px 0 40px;
+  .profile__submit {
+    font-size: 14px;
+    line-height: 1.21;
   }
 
   .profile__edit-button {
@@ -208,11 +224,8 @@
     padding: 74px 0 123px;
   }
 
-  .profile__submit {
-    margin: 220px 0 40px;
-  }
-
-  .profile__container {
-    padding: 220px 0 40px;
+  .profile__api-message {
+    font-size: 11px;
+    padding: 185px 0 0;
   }
 }

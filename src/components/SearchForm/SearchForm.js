@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
-export default function SearchForm() {
-  const [movie, setMovie] = useState("");
-
-  const handleMovieChange = (evt) => {
-    setMovie(evt.target.value);
-  };
-
+export default function SearchForm({
+  onSubmit,
+  onSearchChange,
+  onCheckBoxClick,
+  searchKey,
+  isChecked,
+}) {
   return (
     <section className="search">
-      <form className="search__form">
+      <form className="search__form" onSubmit={onSubmit}>
         <div className="search__box">
           <div className="search__logo" />
           <input
             className="search__input"
-            id="movie"
+            id="search"
             type="search"
-            name="movie"
+            name="search"
             placeholder="Фильм"
-            value={movie}
-            onChange={handleMovieChange}
+            value={searchKey}
+            onChange={onSearchChange}
             required
           />
           <button
@@ -30,7 +30,7 @@ export default function SearchForm() {
             aria-label="Искать"
           />
         </div>
-        <FilterCheckbox />
+        <FilterCheckbox {...{ onCheckBoxClick, isChecked }} />
       </form>
     </section>
   );

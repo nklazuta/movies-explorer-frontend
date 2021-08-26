@@ -12,6 +12,7 @@ export default function Form({
   redirectLink,
   redirect,
   isDisabled,
+  apiError,
 }) {
   const submitButtonClassName = `form__submit form__submit_type_${type} ${
     isDisabled && "form__submit_disabled"
@@ -21,6 +22,7 @@ export default function Form({
     <form className="form" onSubmit={onSubmit}>
       <h2 className="form__title">{title}</h2>
       {children}
+      <p className="form__api-error">{apiError}</p>
       <button
         className={submitButtonClassName}
         type="submit"

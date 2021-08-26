@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Form from "../Form/Form";
 import { useFormWithValidation } from "../../hooks/useForm";
+import { NAME_PATTERN_MISMATCH } from "../../utils/utils";
 import "./Register.css";
 
-export default function Register() {
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+export default function Register({ onRegister, isSending, apiError }) {
+  const { values, errors, isFormValid, isInputValid, handleChange, resetForm } =
+    useFormWithValidation();
 
-  const handleSubmit = (evt) => {
+  useEffect(() => {
+    resetForm({});
+  }, [resetForm]);
+
+  function handleNameChange(evt) {
+    const input = evt.target;
+
+    if (input.validity.patternMismatch) {
+      input.setCustomValidity(NAME_PATTERN_MISMATCH);
+    } else {
+      input.setCustomValidity("");
+    }
+
+    handleChange(evt);
+  }
+
+  function handleSubmit(evt) {
     evt.preventDefault();
-  };
+    onRegister({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    });
+  }
 
   return (
     <section className="register">
@@ -17,39 +40,41 @@ export default function Register() {
       <Form
         title="Добро пожаловать!"
         type="register"
-        buttonText="Зарегистрироваться"
+        buttonText={isSending ? "Сохранение..." : "Зарегистрироваться"}
         onSubmit={handleSubmit}
         redirectText="Уже зарегистрированы?"
         redirectLink="/signin"
         redirect="Войти"
-        isDisabled={!isValid}
+        isDisabled={!isFormValid || isSending}
+        {...{ apiError }}
       >
-        <label className="form__label">
+        <label className="form__label" htmlFor="name">
           Имя
           <input
             className={`form__input form__input_type_name ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="name"
             name="name"
             type="text"
+            pattern="[A-Za-zА-Яа-яЁё\s\-]{2,30}"
             placeholder="Виталий"
             autoComplete="name"
             minLength="2"
             maxLength="30"
             value={values.name || ""}
-            onChange={handleChange}
             required
+            onChange={handleNameChange}
           />
           <span className="form__error" id="name-error">
             {errors.name || ""}
           </span>
         </label>
-        <label className="form__label">
+        <label className="form__label" htmlFor="email">
           E-mail
           <input
             className={`form__input form__input_type_email ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="email"
             name="email"
@@ -64,11 +89,11 @@ export default function Register() {
             {errors.email || ""}
           </span>
         </label>
-        <label className="form__label">
+        <label className="form__label" htmlFor="password">
           Пароль
           <input
             className={`form__input form__input_type_password ${
-              !isValid && "form__input_type_error"
+              !isInputValid && "form__input_type_error"
             }`}
             id="password"
             name="password"

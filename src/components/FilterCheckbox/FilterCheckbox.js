@@ -1,13 +1,7 @@
-import { useState } from "react";
+import React from "react";
 import "./FilterCheckbox.css";
 
-export default function FilterCheckbox() {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleFilterCheckboxClick = () => {
-    setIsChecked(!isChecked);
-  };
-
+export default function FilterCheckbox({ onCheckBoxClick, isChecked }) {
   return (
     <div className="checkbox">
       <label className="checkbox__label" htmlFor="checkbox">
@@ -18,7 +12,8 @@ export default function FilterCheckbox() {
           name="checkbox"
           placeholder="Фильм"
           value={isChecked}
-          onChange={handleFilterCheckboxClick}
+          onChange={onCheckBoxClick}
+          checked={isChecked}
         />
         <span className="checkbox__button"></span>
         <span className="checkbox__title">Короткометражки</span>

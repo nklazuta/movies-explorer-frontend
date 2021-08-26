@@ -10,6 +10,7 @@
 .movies__more-button {
   max-width: 320px;
   width: calc(100% - 80px);
+  display: block;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -22,6 +23,10 @@
   margin: 50px auto 80px;
   cursor: pointer;
   transition: opacity .5s ease;
+}
+
+.movies__more-button_hidden {
+  display: none;
 }
 
 .movies__more-button:hover {

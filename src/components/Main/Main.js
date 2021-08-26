@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../Header/Header";
 import Promo from "../Promo/Promo";
 import AboutProject from "../AboutProject/AboutProject";
@@ -7,9 +7,7 @@ import AboutMe from "../AboutMe/AboutMe";
 import Footer from "../Footer/Footer";
 import "./Main.css";
 
-export default function Main() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+export default function Main({ isLoggedIn }) {
   return (
     <>
       <Header {...{ isLoggedIn }} />

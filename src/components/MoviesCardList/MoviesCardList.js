@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-
 import "./MoviesCardList.css";
 
-export default function MoviesCardList({ movies }) {
-  const [isEmpty, setIsEmpty] = useState(false);
-
-  const moviesNotFoundHandle = (movies) => {
-    const empty = movies.length < 1;
-    setIsEmpty(empty);
-  };
-
-  useEffect(() => {
-    moviesNotFoundHandle(movies);
-  }, [movies]);
-
+export default function MoviesCardList({ movies, moviesError, onClick }) {
   return (
     <section className="cards">
-      {isEmpty ? (
-        <p className="cards__not-found">Фильмы не найдены</p>
+      {moviesError !== "" ? (
+        <p className="cards__not-found">{moviesError}</p>
       ) : (
         <ul className="cards__list">
           {movies.map((movie) => (
-            <MoviesCard key={movie.movieId} {...{ movie }} />
+            <MoviesCard
+              key={movie.id ? movie.id : movie.movieId}
+              {...{ movie, onClick }}
+            />
           ))}
         </ul>
       )}

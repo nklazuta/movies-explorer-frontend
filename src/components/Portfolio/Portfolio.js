@@ -31,7 +31,7 @@ export default function Portfolio() {
         <li className="portfolio__item">
           <a
             className="portfolio__link"
-            href="https://nklazuta.github.io/mesto/"
+            href="https://mesto.nlazuta.nomoredomains.monster"
             target="_blank"
             rel="noopener noreferrer"
           >

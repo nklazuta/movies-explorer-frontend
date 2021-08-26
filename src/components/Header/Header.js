@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useRouteMatch  } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Navigation from "../Navigation/Navigation";
 import NavAuth from "../NavAuth/NavAuth";
@@ -17,7 +17,7 @@ export default function Header({ isLoggedIn }) {
       <HeaderLogo />
       <Switch>
         <Route exact path="/">
-          {isLoggedIn ? <Navigation {...{isMain}} /> : <NavAuth />}
+          {isLoggedIn ? <Navigation {...{ isMain }} /> : <NavAuth />}
         </Route>
         <Route path="/movies">
           <Navigation />

@@ -1,43 +1,68 @@
-import { useState } from "react";
+import React from "react";
 import { useRouteMatch } from "react-router-dom";
+import { SHORT_FILM_DURATION } from "../../utils/utils";
 import "./MoviesCard.css";
-import booksellers from "../../images/the-booksellers.jpg";
 
-export default function MoviesCard({ movie }) {
+export default function MoviesCard({ movie, onClick }) {
   const isSavedMovies = useRouteMatch({ path: "/saved-movies" });
-  const [isLiked, setIsLiked] = useState(false);
 
   const cardSaveButtonClassName = `movie__save-button ${
-    isLiked && "movie__save-button_active"
+    movie.isSaved && "movie__save-button_active"
   }`;
 
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
+  const ariaLabelSaveButton = `${
+    !movie.isSaved ? "Добавить в любимые фильмы" : "Удалить из любимых фильмов"
+  }`;
+
+  const duratioinInHours = (duration) => {
+    if (duration <= SHORT_FILM_DURATION) {
+      return `${duration}м`;
+    } else {
+      const hours = Math.floor(duration / 60);
+      const minutes = Math.floor(duration % 60);
+      return `${hours}ч ${minutes}м`;
+    }
   };
+
+  function handleClick(movie) {
+    onClick(movie);
+  }
 
   return (
     <li className="movie">
       <h2 className="movie__title">{movie.nameRU}</h2>
-      <img
-        className="movie__poster"
-        src={booksellers}
-        alt={`Постер фильма '${movie.nameRU}'`}
-      />
+      <a
+        className="movie__trailer"
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="movie__poster"
+          src={
+            movie.image.url
+              ? `https://api.nomoreparties.co${movie.image.url}`
+              : movie.image
+          }
+          alt={`Постер фильма '${movie.nameRU}'`}
+        />
+      </a>
       {!isSavedMovies ? (
         <button
           className={cardSaveButtonClassName}
           type="button"
-          aria-label="Добавить в любимые фильмы"
-          onClick={handleLikeClick}
+          aria-label={ariaLabelSaveButton}
+          onClick={() => handleClick(movie)}
         />
       ) : (
         <button
           className="movie__delete-button"
           type="button"
           aria-label="Удалить из любимых фильмов"
+          onClick={() => handleClick(movie)}
         />
       )}
-      <p className="movie__duration">{movie.duration}</p>
+      <p className="movie__duration">{duratioinInHours(movie.duration)}</p>
     </li>
   );
 }
